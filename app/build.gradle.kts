@@ -26,6 +26,18 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro")
 
+            // Release build file auto rename
+            applicationVariants.all {
+                val variant = this
+                variant.outputs
+                    .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+                    .forEach { output ->
+                        output.outputFileName = "comics_explorer_${variant.buildType.name}_${defaultConfig.versionName}" +
+                                "_${Date()}.apk"
+                        appReleaseFileName = output.outputFileName
+                    }
+            }
+
         }
 
         getByName("debug"){
@@ -41,6 +53,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    val code = generateVersionCode()
+    val appVersionName :String by rootProject.extra
+    val name = "$appVersionName$code"
 
     defaultConfig {
         applicationId = "com.shortcut.explorer"
@@ -69,3 +85,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.32")
 
 }
+
+
+//Auto generate unique build codes for every minute
+fun generateVersionCode() = (System.currentTimeMillis() / 60000).toInt()
