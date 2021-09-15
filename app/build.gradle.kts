@@ -53,6 +53,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         viewBinding = true
     }
@@ -69,6 +70,16 @@ android {
         targetSdkVersion(30)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
+    sourceSets.getByName("test") {
+        java.srcDir("src/test/java")
+        java.srcDir("src/test/kotlin")
+    }
+
 }
 
 dependencies {
@@ -87,8 +98,40 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.32")
 
+
+    //===================== TEST DEPENDENCIES =============================//
+    testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+
+    // Clean reports tool
+    testImplementation("org.amshove.kluent:kluent-android:1.68")
+
+    // Mocking facilities
+    testImplementation("org.mockito:mockito-core:3.11.2")
+    testImplementation("io.mockk:mockk:1.12.0")
+
+
+
+
+    //===================== ANDROID TEST DEPENDENCIES =============================//
+
+    // Espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+    // AndroidX test
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test:core:1.4.0")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3")
+
 }
 
 
 //Auto generate unique build codes for every minute
 fun generateVersionCode() = (System.currentTimeMillis() / 60000).toInt()
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
