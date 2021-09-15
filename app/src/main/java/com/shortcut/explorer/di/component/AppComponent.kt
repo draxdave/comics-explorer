@@ -6,14 +6,14 @@ import com.shortcut.explorer.di.module.ActivityBuilderModule
 import com.shortcut.explorer.di.module.DataModule
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
-        AndroidInjectionModule::class,
+        AndroidSupportInjectionModule::class,
         ActivityBuilderModule::class,
         DataModule::class
     ]
