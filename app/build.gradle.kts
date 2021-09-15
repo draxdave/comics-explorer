@@ -53,6 +53,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 
     val code = generateVersionCode()
     val appVersionName :String by rootProject.extra
