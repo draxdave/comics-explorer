@@ -3,6 +3,7 @@ buildscript {
     val appVersionName :String by extra("dev0.1.")
     var appReleaseFileName :String by extra("")
     val kotlin :String by extra( "1.5.10")
+    val dagger :String by extra( "2.35")
 
     repositories {
         mavenCentral()

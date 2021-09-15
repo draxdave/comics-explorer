@@ -3,6 +3,8 @@ import java.util.*
 plugins {
     id("com.android.application")
     kotlin("android")
+
+    kotlin("kapt")
 }
 
 android {
@@ -97,6 +99,14 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.32")
+
+
+    // Dagger2
+    val dagger: String by rootProject.extra
+    implementation("com.google.dagger:dagger:$dagger")
+    implementation("com.google.dagger:dagger-android-support:$dagger")
+    kapt("com.google.dagger:dagger-compiler:$dagger")
+    kapt("com.google.dagger:dagger-android-processor:$dagger")
 
 
     //===================== TEST DEPENDENCIES =============================//
