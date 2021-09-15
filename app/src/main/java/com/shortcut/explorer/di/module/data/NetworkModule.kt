@@ -3,12 +3,12 @@ package com.shortcut.explorer.di.module.data
 import com.shortcut.explorer.BuildConfig
 import com.shortcut.explorer.data.network.MainApiService
 import com.shortcut.explorer.data.network.NetworkWrapper
+import com.shortcut.explorer.data.network.SearchApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
@@ -39,17 +39,23 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideMainApiService(okHttpClient: OkHttpClient): MainApiService {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BuildConfig.MAIN_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+            .create()
     }
 
     @Provides
     @Singleton
-    fun provideMainApiService(retrofit: Retrofit): MainApiService {
-        return retrofit.create()
+    fun provideSearchApiService(okHttpClient: OkHttpClient): SearchApiService {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(BuildConfig.SEARCH_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create()
     }
 }
