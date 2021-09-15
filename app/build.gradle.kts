@@ -109,6 +109,14 @@ dependencies {
     kapt("com.google.dagger:dagger-android-processor:$dagger")
 
 
+    // Retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+
+
     //===================== TEST DEPENDENCIES =============================//
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
@@ -133,6 +141,10 @@ dependencies {
     androidTestImplementation("androidx.test:core:1.4.0")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3")
 
+
+    //for test
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.4.0")
 }
 
 
