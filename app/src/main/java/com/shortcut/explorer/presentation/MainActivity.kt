@@ -2,10 +2,11 @@ package com.shortcut.explorer.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.shortcut.explorer.R
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,10 +15,11 @@ class MainActivity : AppCompatActivity() {
 
 
         val bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_controller) as NavHostFragment
 
         NavigationUI.setupWithNavController(
             bottomNavView,
-            findNavController(R.id.fragment_container)
+            navHostFragment.navController
         )
     }
 }
