@@ -2,9 +2,12 @@
 
 package com.shortcut.explorer.business.repositories
 
+import app.cash.turbine.test
 import com.shortcut.explorer.business.datasource.network.NetworkWrapper
 import com.shortcut.explorer.business.datasource.network.main.ComicDto
 import com.shortcut.explorer.business.datasource.network.main.MainApiService
+import com.shortcut.explorer.business.domain.Constants
+import com.shortcut.explorer.business.domain.model.Resource
 import com.shortcut.explorer.business.domain.model.Status
 import com.shortcut.explorer.test_util.TempData
 import com.shortcut.explorer.test_util.runBlockingTest
@@ -19,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 
 import org.junit.jupiter.api.Test
+import kotlin.time.ExperimentalTime
 
 internal class `Recent Comics Repository Tested for` {
 
@@ -126,50 +130,56 @@ internal class `Recent Comics Repository Tested for` {
         }
     }
 
+    @ExperimentalTime
     @Nested
     inner class `getting recent comics and`{
+
+        val loading: Resource<ComicDto> =  Resource.loading(null)
+        val emptyResponse = Resource.success(TempData.getComicDtos(0))
+        val nonEmptyResponse = Resource.success(TempData.getComicDtos(Constants.RESENT_PAGE_ITEM_COUNT))
+        val networkError = TempData.networkError<ComicDto>()
 
         @BeforeEach
         fun initBefore(){
 
         }
 
+        @ExperimentalTime
         @Test
         fun `network returns empty result`() = runBlockingTest{
 
-            coEvery { mockMainApiService.getComicByNumber(any()) } returns TempData.networkSuccess(null)
+            coEvery { mockMainApiService.getLatestComic() } returns TempData.networkSuccess(null)
 
-            val results = mutableListOf<ComicDto>()
-            val result = recentComicsRepository.getRecentComics().test
-
-            results shouldHaveSize  0
+            recentComicsRepository.getRecentComics().test {
+                awaitItem() shouldBeEqualTo  loading
+                awaitItem().data?.size shouldBeEqualTo   emptyResponse.data?.size
+                awaitComplete()
+            }
         }
 
         @Test
-        fun `network returns a result`() = runBlockingTest{
-            coEvery { mockMainApiService.getLatestComic() } returns TempData.networkSuccess(TempData.getComicDto())
+        fun `network returns a list of results`() = runBlockingTest{
+            coEvery { mockMainApiService.getLatestComic() } returns TempData.networkSuccess(TempData.getComicDto(1))
+            coEvery { mockMainApiService.getComicByNumber(any()) } returns TempData.networkSuccess(TempData.getComicDto(1))
 
-            val results = mutableListOf<ComicDto>()
-            recentComicsRepository.getComicByNumber(0){
-                results.add(it)
+            recentComicsRepository.getRecentComics().test {
+                awaitItem() shouldBeEqualTo  loading
+                awaitItem().data?.size shouldBeEqualTo   nonEmptyResponse.data?.size
+                awaitComplete()
             }
-
-            results shouldHaveSize  1
         }
 
         @Test
         fun `network returns an error`() = runBlockingTest{
 
-            coEvery { mockMainApiService.getLatestComic() } returns TempData.networkError()
+            coEvery { mockMainApiService.getLatestComic() } returns TempData.networkError<ComicDto>()
 
-            var isSuccessful = false
-            val result = recentComicsRepository.getComicByNumber(0){
-                isSuccessful = true
+            recentComicsRepository.getRecentComics().test{
+                awaitItem() shouldBeEqualTo  loading
+                awaitItem().errorCode shouldBeEqualTo networkError.code()
+
+                awaitComplete()
             }
-
-            result.status shouldBeEqualTo  Status.ERROR
-            isSuccessful shouldBeEqualTo  false
-
         }
     }
 }
