@@ -41,6 +41,7 @@ abstract class  BaseFragment<T: ViewDataBinding, E:BaseViewModel>(private val in
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModel.reset()
     }
 
 }

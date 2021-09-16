@@ -1,6 +1,7 @@
 package com.shortcut.explorer.di.module
 
 import com.shortcut.explorer.business.repositories.RecentComicsRepository
+import com.shortcut.explorer.business.repositories.SearchComicsRepository
 import com.shortcut.explorer.presentation.SharedViewModel
 import dagger.Module
 import dagger.Provides
@@ -11,6 +12,6 @@ class ViewModelModule{
 
     @Provides
     @Singleton
-    fun provideRecentViewmodel(recentComicsRepository: RecentComicsRepository) = SharedViewModel(recentComicsRepository)
+    fun provideRecentViewmodel(recentComicsRepository: RecentComicsRepository, searchComicsRepository: SearchComicsRepository) = SharedViewModel(recentComicsRepository,searchComicsRepository)
     
 }

@@ -13,8 +13,8 @@
         android:name="com.shortcut.explorer.presentation.recent.RecentFragment"
         android:id="@+id/fragment_favorites"/>
 
-    <fragment tools:layout="@layout/fragment_recent"
-        android:name="com.shortcut.explorer.presentation.recent.RecentFragment"
+    <fragment tools:layout="@layout/fragment_search"
+        android:name="com.shortcut.explorer.presentation.search.SearchFragment"
         android:id="@+id/fragment_search"/>
 
 

@@ -3,6 +3,7 @@ package com.shortcut.explorer.presentation.search
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,18 +15,30 @@ import com.shortcut.explorer.presentation.SharedViewModel
 import com.shortcut.explorer.presentation._base.BaseFragment
 import com.shortcut.explorer.presentation.recent.ComicsListAdapter
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(FragmentSearchBinding::inflate),
     ComicsListAdapter.Interaction {
 
     private var recyclerAdapter: ComicsListAdapter? = null // can leak memory so need to null
+    private var searchJob: Job?=null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        initFilterInput()
         subscribeObservers()
 
+    }
+
+    private fun initFilterInput() {
+        binding.inputFilter.doAfterTextChanged { editable ->
+            editable?.toString()?.takeIf { it.length > 2 }?.let {
+                searchComicsFor(it)
+            }
+        }
     }
 
     private fun initRecyclerView(){
@@ -62,17 +75,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
         })
     }
 
-    private fun getRecentComics() {
-        lifecycleScope.launchWhenResumed {
-            viewModel.getRecentComics { messsage, id ->
+    private fun searchComicsFor(searchPhrase:String) {
+        searchJob?.cancel()
+
+        searchJob = lifecycleScope.launchWhenResumed {
+            // Cancellability
+            delay(500L)
+
+            viewModel.searchComics(searchPhrase) { messsage, id ->
                 // display error message.
             }
         }
-    }
-
-    override fun onRefresh() {
-        binding.swipeRefresh.isRefreshing = false
-        getRecentComics()
     }
 
     override fun onItemSelected(position: Int, item: Comic) {
