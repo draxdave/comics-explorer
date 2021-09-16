@@ -14,7 +14,7 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideRoomDatabase(appContext: Context):  MainDatabase {
-        return Room.databaseBuilder(appContext, MainDatabase::class.java, "DD_db")
+        return Room.databaseBuilder(appContext, MainDatabase::class.java, "Comics_db")
             .setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
