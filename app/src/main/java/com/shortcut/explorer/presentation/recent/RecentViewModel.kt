@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class RecentViewModel @Inject constructor(private val recentRepo: RecentComicsRepository): BaseViewModel() {
 
-    private val _recentComics = MutableLiveData<List<Comic>>()
+    private val _recentComics = MutableLiveData<List<Comic>>(null)
     val recentComics:LiveData<List<Comic>> = _recentComics
 
     suspend fun getRecentComics(onFail: OnFail){
@@ -31,6 +31,10 @@ class RecentViewModel @Inject constructor(private val recentRepo: RecentComicsRe
             }
 
         }
+    }
+
+    fun loadMore() {
+        TODO("Not yet implemented")
     }
 
 }

@@ -95,6 +95,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 
     //kotlin coroutines
@@ -137,6 +138,10 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
 
+    // Glide
+    val glideVersion = "4.10.0"
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
+    kapt("com.github.bumptech.glide:compiler:$glideVersion")
 
 
 

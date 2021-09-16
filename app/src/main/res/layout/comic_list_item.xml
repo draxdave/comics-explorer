@@ -4,10 +4,9 @@
         <variable
             name="comic"
             type="com.shortcut.explorer.business.domain.model.Comic" />
-        <import type="android.view.View"/>
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
