@@ -3,7 +3,7 @@ package com.shortcut.explorer.di.module.data
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.shortcut.explorer.business.db.MainDatabase
+import com.shortcut.explorer.business.datasource.db.MainDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

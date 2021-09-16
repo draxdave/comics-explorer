@@ -1,9 +1,9 @@
 package com.shortcut.explorer.di.module.data
 
 import com.shortcut.explorer.BuildConfig
-import com.shortcut.explorer.business.network.MainApiService
-import com.shortcut.explorer.business.network.NetworkWrapper
-import com.shortcut.explorer.business.network.SearchApiService
+import com.shortcut.explorer.business.datasource.network.main.MainApiService
+import com.shortcut.explorer.business.datasource.network.NetworkWrapper
+import com.shortcut.explorer.business.datasource.network.search.SearchApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

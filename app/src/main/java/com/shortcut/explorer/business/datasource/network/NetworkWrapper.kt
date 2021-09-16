@@ -1,9 +1,8 @@
-package com.shortcut.explorer.business.network
+package com.shortcut.explorer.business.datasource.network
 
-import com.shortcut.explorer.business.network.model.OnFail
-import com.shortcut.explorer.business.network.model.OnSuccess
-import com.shortcut.explorer.business.network.model.Resource
-import com.shortcut.explorer.business.network.model.ServerResponse
+import com.shortcut.explorer.business.datasource.network.model.OnFail
+import com.shortcut.explorer.business.datasource.network.model.OnSuccess
+import com.shortcut.explorer.business.domain.model.Resource
 import kotlinx.coroutines.yield
 import org.json.JSONException
 import retrofit2.HttpException
@@ -26,16 +25,16 @@ class NetworkWrapper{
      * @param T : request type.
      * @param call : inline function, containing the network executable.
      */
-    private suspend fun <T> run(call: suspend () -> Response<ServerResponse<T>>) = call.invoke()
+    private suspend fun <T> run(call: suspend () -> Response<T>) = call.invoke()
 
     /**
      * Jus start the transaction with provided [call] object.
      *
      * @param T :Expecting result type
      * @param call : inline function, containing the network executable.
-     * @return : returns a network result wraped with [Resource]. Inner data is a [ServerResponse].
+     * @return : returns a network result wraped with [Resource].
      */
-    suspend fun <T> fetch (call:suspend () -> Response<ServerResponse<T>>) = fetch(call,{})
+    suspend fun <T> fetch (call:suspend () -> Response<T>) = fetch(call,{})
 
     /**
      * Jus start the transaction with provided [call] object and invoke [onSuccess] lambda if
@@ -44,9 +43,9 @@ class NetworkWrapper{
      * @param T :Expecting result type
      * @param call : inline function, containing the network executable.
      * @param onSuccess : inline function, to be invoked if the call returns successfully.
-     * @return : returns a network result wraped with [Resource]. Inner data is a [ServerResponse].
+     * @return : returns a network result wraped with [Resource].
      */
-    suspend fun <T> fetch (call:suspend () -> Response<ServerResponse<T>>,
+    suspend fun <T> fetch (call:suspend () -> Response<T>,
                            onSuccess: OnSuccess<T>
     ) = fetch(call,onSuccess,{_,_->})
 
@@ -58,12 +57,12 @@ class NetworkWrapper{
      * @param call : inline function, containing the network executable.
      * @param onSuccess : inline function, to be invoked if the call returns successfully.
      * @param onFail : inline function, to be invoked if the call fails.
-     * @return : returns a network result wraped with [Resource]. Inner data is a [ServerResponse].
+     * @return : returns a network result wraped with [Resource].
      */
-    suspend fun <T> fetch (call: suspend () -> Response<ServerResponse<T>>,
+    suspend fun <T> fetch (call: suspend () -> Response<T>,
                            onSuccess: OnSuccess<T>,
                            onFail: OnFail
-    ) : Resource<ServerResponse<T>> {
+    ) : Resource<T> {
         /**
          * yield()
          * Cancel the job if request was cancelled already
@@ -108,9 +107,9 @@ class NetworkWrapper{
      * @param T : data type.
      * @param body : main content that received.
      * @param onSuccess : passed callback function to invoke.
-     * @return : a [Resource] of type [Status.SUCCESS].
+     * @return : a [Resource] of type [com.shortcut.explorer.business.domain.model.Status.SUCCESS].
      */
-    private suspend fun <T> onSucceed(body: Response<ServerResponse<T>>, onSuccess: OnSuccess<T>): Resource<ServerResponse<T>>{
+    private suspend fun <T> onSucceed(body: Response<T>, onSuccess: OnSuccess<T>): Resource<T> {
         onSuccess(body.body())
         return Resource.success(body.body())
     }
@@ -122,9 +121,9 @@ class NetworkWrapper{
      * @param T : data type.
      * @param code : error code.
      * @param onFail : passed callback function to be invoked on transaction failure.
-     * @return : a [Resource] of type [Status.ERROR].
+     * @return : a [Resource] of type [com.shortcut.explorer.business.domain.model.Status.ERROR].
      */
-    private suspend fun <T> onFailed(code: Int, onFail: OnFail): Resource<ServerResponse<T>>{
+    private suspend fun <T> onFailed(code: Int, onFail: OnFail): Resource<T> {
         return try {
             onFail.invoke("msg",code)
             Resource.error( "msg", errorCode = code)

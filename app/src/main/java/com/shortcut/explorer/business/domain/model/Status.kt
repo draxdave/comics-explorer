@@ -1,4 +1,4 @@
-package com.shortcut.explorer.business.network.model
+package com.shortcut.explorer.business.domain.model
 
 /**#code from  : gitHubBrowserSample
  * Status of a resource that is provided to the UI.
