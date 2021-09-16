@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flow
 interface RecentComicsRepository{
 
     suspend fun getRecentComics():Flow<Resource<List<Comic>>>
-    suspend fun getLastComic():Resource<ComicDto>
+    suspend fun getLastComic(onSuccess: OnSuccess<ComicDto>):Resource<ComicDto>
     suspend fun getComicByNumber(number:Int, onSuccess: OnSuccess<ComicDto>):Resource<ComicDto>
 }
 
@@ -30,30 +30,32 @@ class RecentComicsRepositoryImpl(
 
         val comicsList = mutableListOf<Comic>()
 
-        val lastComic = getLastComic()
-        if (lastComic.status == Status.SUCCESS)
+        val lastComic = getLastComic { lastComic->
 
             repeat(RESENT_PAGE_ITEM_COUNT){
-                getComicByNumber(lastComic.data!!.num - 1){
-                    comicsList.add(it!!.toComic())
+                getComicByNumber(lastComic.num - 1){
+                        comicsList.add(it.toComic())
                 }
-
             }
 
-        else
+            emit(Resource.success(comicsList))
+        }
+
+        if (lastComic.status == Status.ERROR)
             emit(Resource(lastComic.status, comicsList, lastComic.message, lastComic.errorCode))
     }
 
-    override suspend fun getLastComic(): Resource<ComicDto> {
+    override suspend fun getLastComic(onSuccess: OnSuccess<ComicDto>): Resource<ComicDto> {
 
-        val result = networkWrapper.fetch {
+        val result = networkWrapper.fetch ({
             mainApiService.getLatestComic()
-        }
+        }, onSuccess)
 
         return result
     }
 
     override suspend fun getComicByNumber(number: Int, onSuccess: OnSuccess<ComicDto>): Resource<ComicDto> {
+
         val result = networkWrapper.fetch ({
             mainApiService.getComicByNumber(num = number)
         },onSuccess)

@@ -110,7 +110,10 @@ class NetworkWrapper{
      * @return : a [Resource] of type [com.shortcut.explorer.business.domain.model.Status.SUCCESS].
      */
     private suspend fun <T> onSucceed(body: Response<T>, onSuccess: OnSuccess<T>): Resource<T> {
-        onSuccess(body.body())
+        body.body()?.let {
+            onSuccess(it)
+
+        }
         return Resource.success(body.body())
     }
 
