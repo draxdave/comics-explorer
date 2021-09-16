@@ -5,4 +5,7 @@
     <string name="favorite_comics">Favorites</string>
     <string name="recent_comics_title">Recent Comics</string>
     <string name="empty_list">No comics are available.</string>
+    <string name="search_comics_title">Search Comics</string>
+    <string name="search_hint">Comic Number or Text</string>
+    <string name="search_desc">Enter a part of the text or Comic number to start searching comics</string>
 </resources>

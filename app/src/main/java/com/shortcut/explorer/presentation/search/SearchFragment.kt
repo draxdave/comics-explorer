@@ -1,4 +1,4 @@
-package com.shortcut.explorer.presentation.recent
+package com.shortcut.explorer.presentation.search
 
 import android.os.Bundle
 import android.util.Log
@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.databinding.FragmentRecentBinding
+import com.shortcut.explorer.databinding.FragmentSearchBinding
 import com.shortcut.explorer.presentation.SharedViewModel
 import com.shortcut.explorer.presentation._base.BaseFragment
+import com.shortcut.explorer.presentation.recent.ComicsListAdapter
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
 
-class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(FragmentRecentBinding::inflate),
-    SwipeRefreshLayout.OnRefreshListener, ComicsListAdapter.Interaction {
+class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(FragmentSearchBinding::inflate),
+    ComicsListAdapter.Interaction {
 
     private var recyclerAdapter: ComicsListAdapter? = null // can leak memory so need to null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.swipeRefresh.setOnRefreshListener(this)
 
         initRecyclerView()
         subscribeObservers()
@@ -35,7 +35,7 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(Frag
             removeItemDecoration(topSpacingDecorator) // does nothing if not applied already
             addItemDecoration(topSpacingDecorator)
 
-            recyclerAdapter = ComicsListAdapter(this@RecentFragment)
+            recyclerAdapter = ComicsListAdapter(this@SearchFragment)
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -48,7 +48,7 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(Frag
                         && viewModel.isLoading.value == false
                     ) {
                         Log.d(TAG, "attempting to load next page...")
-                        viewModel.loadMore()
+                        viewModel.loadMoreSearchResults()
                     }
                 }
             })
@@ -57,12 +57,8 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(Frag
     }
 
     private fun subscribeObservers(){
-        viewModel.recentComics.observe(viewLifecycleOwner, { comicsList ->
-            if (comicsList==null)
-                getRecentComics()
-
-            else
-                recyclerAdapter?.submitList(comicList = comicsList)
+        viewModel.searchResult.observe(viewLifecycleOwner, { comicsList ->
+            recyclerAdapter?.submitList(comicList = comicsList)
         })
     }
 

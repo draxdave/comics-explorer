@@ -1,4 +1,4 @@
-package com.shortcut.explorer.presentation.recent
+package com.shortcut.explorer.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +11,13 @@ import com.shortcut.explorer.presentation._base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
-class RecentViewModel @Inject constructor(private val recentRepo: RecentComicsRepository): BaseViewModel() {
+class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRepository): BaseViewModel() {
 
     private val _recentComics = MutableLiveData<List<Comic>>(null)
     val recentComics:LiveData<List<Comic>> = _recentComics
+
+    private val _searchResult = MutableLiveData<List<Comic>>()
+    val searchResult:LiveData<List<Comic>> = _searchResult
 
     suspend fun getRecentComics(onFail: OnFail){
 
@@ -34,6 +37,10 @@ class RecentViewModel @Inject constructor(private val recentRepo: RecentComicsRe
     }
 
     fun loadMore() {
+
+    }
+
+    fun loadMoreSearchResults() {
 
     }
 
