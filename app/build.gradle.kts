@@ -57,7 +57,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        dataBinding = true
     }
 
     val code = generateVersionCode()
@@ -71,7 +71,7 @@ android {
         minSdkVersion(23)
         targetSdkVersion(30)
         buildConfigField("String", "MAIN_BASE_URL", "\"https://xkcd.com/\"")
-        buildConfigField("String", "SEARCH_BASE_URL", "")
+        buildConfigField("String", "SEARCH_BASE_URL", "\"\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
