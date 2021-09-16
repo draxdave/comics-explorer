@@ -23,6 +23,7 @@ abstract class  BaseFragment<T: ViewDataBinding, E:BaseViewModel>(private val in
         savedInstanceState: Bundle?
     ): View? {
         AndroidSupportInjection.inject(this)
+
         return inflate.invoke(inflater,container,false).apply {
             lifecycleOwner = viewLifecycleOwner
 

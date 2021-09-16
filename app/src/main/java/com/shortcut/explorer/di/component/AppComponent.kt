@@ -4,6 +4,7 @@ import android.content.Context
 import com.shortcut.explorer.App
 import com.shortcut.explorer.di.module.ActivityBuilderModule
 import com.shortcut.explorer.di.module.DataModule
+import com.shortcut.explorer.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -15,7 +16,8 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBuilderModule::class,
-        DataModule::class
+        DataModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
