@@ -9,6 +9,6 @@ import retrofit2.http.Query
 interface SearchApiService {
 
     @GET("wiki/api.php?action=query&list=search&format=json")
-    suspend fun getLatestComic(@Query("srsearch") searchKey : String): Response<SearchDto>
+    suspend fun search(@Query("srsearch") searchKey : String): Response<SearchDto>
 
 }
