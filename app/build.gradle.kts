@@ -162,6 +162,8 @@ dependencies {
     testImplementation("org.mockito:mockito-core:3.11.2")
     testImplementation("io.mockk:mockk:1.12.0")
 
+    // Flow test helper
+    testImplementation("app.cash.turbine:turbine:0.6.0")
 
 
 
