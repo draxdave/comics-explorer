@@ -33,7 +33,7 @@ abstract class  BaseFragment<T: ViewDataBinding, E:BaseViewModel>(private val in
             /**
              * Viewmodel is set to the fragment binding here via Variable set.
              */
-            setVariable(BR._all,viewModel)
+            setVariable(BR.model,viewModel)
             _binding = this
         }.root
     }

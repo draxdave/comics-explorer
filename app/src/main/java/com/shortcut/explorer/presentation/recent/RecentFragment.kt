@@ -81,7 +81,7 @@ class RecentFragment : BaseFragment<FragmentRecentBinding,RecentViewModel>(Fragm
     }
 
     override fun onItemSelected(position: Int, item: Comic) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onDestroyView() {

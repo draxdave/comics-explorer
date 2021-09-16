@@ -6,47 +6,56 @@
             type="com.shortcut.explorer.business.domain.model.Comic" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="4dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/cover"
-            android:maxLines="1"
-            android:padding="4dp"
-            android:layout_margin="4dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:text="@{comic.title}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/cover"
+                android:maxLines="1"
+                android:padding="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:text="@{comic.title}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/snippet_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/cover"
-            android:maxLines="2"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:maxLength="250"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:text="@{comic.title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_tv" />
+            <TextView
+                android:id="@+id/snippet_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/cover"
+                android:maxLines="2"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:textColor="@color/colorSecondary"
+                android:maxLength="250"
+                android:textSize="12sp"
+                android:text="@{comic.title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/cover"
-            app:shapeAppearanceOverlay="@style/roundedImageView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@{comic.title}"
-            android:layout_width="96dp"
-            android:layout_height="96dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/cover"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@{comic.title}"
+                android:layout_width="96dp"
+                android:layout_height="96dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
