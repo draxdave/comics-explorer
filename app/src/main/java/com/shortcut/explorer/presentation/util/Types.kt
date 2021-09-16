@@ -2,8 +2,6 @@ package com.shortcut.explorer.presentation.util
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.google.android.gms.maps.model.LatLng
-import ir.drax.foursqare.network.model.ServerResponse
 
 
 /**
