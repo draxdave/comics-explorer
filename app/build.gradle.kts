@@ -70,7 +70,7 @@ android {
         versionCode = 1
         minSdkVersion(23)
         targetSdkVersion(30)
-        buildConfigField("String", "MAIN_BASE_URL", "")
+        buildConfigField("String", "MAIN_BASE_URL", "\"https://xkcd.com/\"")
         buildConfigField("String", "SEARCH_BASE_URL", "")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
