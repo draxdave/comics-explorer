@@ -50,6 +50,9 @@ android {
     compileOptions{
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
+        // Flag to enable support for the new language APIs
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -71,7 +74,7 @@ android {
         minSdkVersion(23)
         targetSdkVersion(30)
         buildConfigField("String", "MAIN_BASE_URL", "\"https://xkcd.com/\"")
-        buildConfigField("String", "SEARCH_BASE_URL", "\"\"")
+        buildConfigField("String", "SEARCH_BASE_URL", "\"https://www.explainxkcd.com/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

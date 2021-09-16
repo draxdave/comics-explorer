@@ -17,7 +17,8 @@ data class ComicDto(
 
 fun ComicDto.toComic(): Comic {
 
-    return Comic(num = num,
+    return Comic(
+        num = num,
         title = safe_title,
 
         description =
