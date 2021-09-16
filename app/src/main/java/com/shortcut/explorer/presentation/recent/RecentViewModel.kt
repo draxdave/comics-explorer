@@ -2,16 +2,13 @@ package com.shortcut.explorer.presentation.recent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.shortcut.explorer.business.datasource.network.main.Comic
+import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.datasource.network.model.OnFail
 import com.shortcut.explorer.business.domain.NetworkErrorCode
 import com.shortcut.explorer.business.domain.model.Status
 import com.shortcut.explorer.business.repositories.RecentComicsRepository
 import com.shortcut.explorer.presentation._base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RecentViewModel @Inject constructor(private val recentRepo: RecentComicsRepository): BaseViewModel() {

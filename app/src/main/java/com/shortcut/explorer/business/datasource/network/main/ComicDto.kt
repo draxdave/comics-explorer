@@ -1,5 +1,7 @@
 package com.shortcut.explorer.business.datasource.network.main
 
+import com.shortcut.explorer.business.domain.model.Comic
+
 data class ComicDto(
     val num: Int,
     val title: String,
@@ -13,16 +15,7 @@ data class ComicDto(
     val news: String,
 )
 
-data class Comic(
-    val num: Int,
-    val title: String,
-    val description: String,
-    val imgUrl: String,
-    val date: String,
-    var isLast:Boolean
-)
-
-fun ComicDto.toComic():Comic {
+fun ComicDto.toComic(): Comic {
 
     return Comic(num = num,
         title = safe_title,
