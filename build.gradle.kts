@@ -4,6 +4,8 @@ buildscript {
     var appReleaseFileName :String by extra("")
     val kotlin :String by extra( "1.5.10")
     val dagger :String by extra( "2.35")
+    val lifecycleVersion :String by extra( "2.2.0")
+
 
     repositories {
         mavenCentral()

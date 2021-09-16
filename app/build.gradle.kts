@@ -125,6 +125,11 @@ dependencies {
     kapt ("androidx.room:room-compiler:$room_version")
 
 
+    // Lifecycle compiler
+    val lifecycleVersion :String by rootProject.extra
+    implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+
 
 
 
