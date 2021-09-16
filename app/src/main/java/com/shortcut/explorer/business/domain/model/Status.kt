@@ -7,9 +7,10 @@ package com.shortcut.explorer.business.domain.model
  * `LiveData<Resource<T>>` or Flow objects to pass back the latest data to the UI with its fetch
  * status.
  */
-enum class Status {
-    SUCCESS, /** Indication a Success state */
-    ERROR, /** Indication a Failure/Cancel/Error/non-configured state */
-    LOADING /** Indication a Loading/Wait state */
+sealed class Status {
+    /** Indication a Loading/Wait state */
+    object SUCCESS : Status()
+    object ERROR : Status()
+    object LOADING : Status()
 }
 

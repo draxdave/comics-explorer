@@ -2,6 +2,7 @@ package com.shortcut.explorer.business.datasource.network
 
 import com.shortcut.explorer.business.datasource.network.model.OnFail
 import com.shortcut.explorer.business.datasource.network.model.OnSuccess
+import com.shortcut.explorer.business.domain.NetworkErrorCode
 import com.shortcut.explorer.business.domain.model.Resource
 import kotlinx.coroutines.yield
 import org.json.JSONException
@@ -85,19 +86,19 @@ class NetworkWrapper{
 
         } catch (e: ConnectException) {
             e.printStackTrace()
-            Resource.error(errorCode = CONNECT_EXCEPTION)
+            Resource.error(errorCode = NetworkErrorCode.CONNECT_EXCEPTION)
 
         } catch (e: SocketTimeoutException) {
             e.printStackTrace()
-            Resource.error(errorCode =  SOCKET_TIME_OUT_EXCEPTION)
+            Resource.error(errorCode =  NetworkErrorCode.SOCKET_TIME_OUT_EXCEPTION)
 
         } catch (e: UnknownHostException) {
             e.printStackTrace()
-            Resource.error(errorCode = UNKNOWN_HOST_EXCEPTION)
+            Resource.error(errorCode = NetworkErrorCode.UNKNOWN_HOST_EXCEPTION)
 
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.error(errorCode = EXCEPTION)
+            Resource.error(errorCode = NetworkErrorCode.EXCEPTION)
         }
     }
 
@@ -135,11 +136,5 @@ class NetworkWrapper{
             Resource.error(exception.localizedMessage)
         }
     }
-
-    companion object {
-        const val CONNECT_EXCEPTION = 600           /** It means there is no internet connection around. */
-        const val SOCKET_TIME_OUT_EXCEPTION = 601   /** No internet connection or poor connection quality */
-        const val UNKNOWN_HOST_EXCEPTION = 602      /** Probably a dns issue or wrong host address */
-        const val EXCEPTION = 603                   /** Something that should be investigated */
-    }
 }
+
