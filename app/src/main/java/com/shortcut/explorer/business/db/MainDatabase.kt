@@ -1,4 +1,4 @@
-package com.shortcut.explorer.data.db
+package com.shortcut.explorer.business.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

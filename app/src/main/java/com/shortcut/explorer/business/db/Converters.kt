@@ -1,4 +1,4 @@
-package com.shortcut.explorer.data.db
+package com.shortcut.explorer.business.db
 
 
 class Converters {

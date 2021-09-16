@@ -1,4 +1,4 @@
-package com.shortcut.explorer.data.network.model
+package com.shortcut.explorer.business.network.model
 
 /**#code from  : gitHubBrowserSample
  *

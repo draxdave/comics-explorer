@@ -1,9 +1,9 @@
-package com.shortcut.explorer.data.network
+package com.shortcut.explorer.business.network
 
-import com.shortcut.explorer.data.network.model.OnFail
-import com.shortcut.explorer.data.network.model.OnSuccess
-import com.shortcut.explorer.data.network.model.Resource
-import com.shortcut.explorer.data.network.model.ServerResponse
+import com.shortcut.explorer.business.network.model.OnFail
+import com.shortcut.explorer.business.network.model.OnSuccess
+import com.shortcut.explorer.business.network.model.Resource
+import com.shortcut.explorer.business.network.model.ServerResponse
 import kotlinx.coroutines.yield
 import org.json.JSONException
 import retrofit2.HttpException

@@ -1,6 +1,6 @@
-package com.shortcut.explorer.data.network
+package com.shortcut.explorer.business.network
 
-import com.shortcut.explorer.data.network.model.ComicItem
+import com.shortcut.explorer.business.network.model.ComicItem
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
