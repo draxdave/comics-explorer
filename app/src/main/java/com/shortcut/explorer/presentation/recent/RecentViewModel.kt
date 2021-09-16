@@ -34,7 +34,7 @@ class RecentViewModel @Inject constructor(private val recentRepo: RecentComicsRe
     }
 
     fun loadMore() {
-        TODO("Not yet implemented")
+
     }
 
 }

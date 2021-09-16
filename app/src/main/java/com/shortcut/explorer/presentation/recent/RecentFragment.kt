@@ -77,8 +77,7 @@ class RecentFragment : BaseFragment<FragmentRecentBinding,RecentViewModel>(Fragm
 
     override fun onRefresh() {
         binding.swipeRefresh.isRefreshing = false
-
-        TODO("Not yet implemented")
+        getRecentComics()
     }
 
     override fun onItemSelected(position: Int, item: Comic) {
