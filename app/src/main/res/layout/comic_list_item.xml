@@ -44,16 +44,15 @@
                 android:textColor="@color/colorSecondary"
                 android:maxLength="250"
                 android:textSize="12sp"
-                android:text="@{comic.title"
+                android:text="@{comic.description}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <ImageView
                 android:id="@+id/cover"
-                app:shapeAppearanceOverlay="@style/roundedImageView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@{comic.title}"
+                android:contentDescription="@{comic.description}"
                 android:layout_width="96dp"
                 android:layout_height="96dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

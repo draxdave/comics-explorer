@@ -17,6 +17,7 @@ class ComicsListAdapter(
     private val requestOptions = RequestOptions
         .placeholderOf(R.drawable.ic_launcher_foreground)
         .error(R.drawable.ic_baseline_error_outline_24)
+        .centerCrop()
 
     private val TAG: String = "AppDebug"
 
@@ -105,8 +106,8 @@ class ComicsListAdapter(
                 .load(item.imgUrl)
                 .transition(withCrossFade())
                 .into(binding.cover)
-            binding.titleTv.text = item.title
-            binding.snippetTv.text = item.description
+            binding.comic = item
+            binding.executePendingBindings()
         }
     }
 

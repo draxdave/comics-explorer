@@ -19,7 +19,7 @@ fun ComicDto.toComic(): Comic {
 
     return Comic(
         num = num,
-        title = safe_title,
+        title = title,
 
         description =
         if (transcript.isBlank()) alt
