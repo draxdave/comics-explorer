@@ -1,5 +1,7 @@
 package com.shortcut.explorer.business.datasource.network.search
 
+import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
@@ -34,7 +36,7 @@ fun SearchResult.toQuery(): com.shortcut.explorer.business.domain.model.SearchRe
             num = num,
             title = title,
             pageid = pageid,
-            description = snippet,
+            description = snippet.parseAsHtml(HtmlCompat.FROM_HTML_MODE_LEGACY),
             date = date,
         )
 
