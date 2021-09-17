@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.shortcut.explorer.business.domain.model.Comic
+import com.shortcut.explorer.business.domain.model.SearchResult
 import com.shortcut.explorer.databinding.FragmentRecentBinding
 import com.shortcut.explorer.databinding.FragmentSearchBinding
 import com.shortcut.explorer.presentation.SharedViewModel
@@ -19,9 +20,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(FragmentSearchBinding::inflate),
-    ComicsListAdapter.Interaction {
+    SearchResultListAdapter.Interaction {
 
-    private var recyclerAdapter: ComicsListAdapter? = null // can leak memory so need to null
+    private var recyclerAdapter: SearchResultListAdapter? = null // can leak memory so need to null
     private var searchJob: Job?=null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
             removeItemDecoration(topSpacingDecorator) // does nothing if not applied already
             addItemDecoration(topSpacingDecorator)
 
-            recyclerAdapter = ComicsListAdapter(this@SearchFragment)
+            recyclerAdapter = SearchResultListAdapter(this@SearchFragment)
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -71,7 +72,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
 
     private fun subscribeObservers(){
         viewModel.searchResult.observe(viewLifecycleOwner, { comicsList ->
-            recyclerAdapter?.submitList(comicList = comicsList)
+            recyclerAdapter?.submitList(comicsList)
         })
     }
 
@@ -88,7 +89,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
         }
     }
 
-    override fun onItemSelected(position: Int, item: Comic) {
+    override fun onItemSelected(position: Int, item: SearchResult) {
 
     }
 

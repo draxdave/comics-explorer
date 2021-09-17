@@ -1,6 +1,5 @@
 package com.shortcut.explorer.business.datasource.network.search
 
-import com.shortcut.explorer.business.domain.model.Comic
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
@@ -17,7 +16,7 @@ data class SearchResult(
     val timestamp:String
 )
 
-fun SearchResult.toComic():Comic?{
+fun SearchResult.toQuery(): com.shortcut.explorer.business.domain.model.SearchResult?{
     val divider = ":"
 
     if (title.contains(divider)) {
@@ -31,13 +30,12 @@ fun SearchResult.toComic():Comic?{
 
         val date = dateFormat.format(Date.from(Instant.parse(timestamp)))
 
-        return Comic(
+        return com.shortcut.explorer.business.domain.model.SearchResult(
             num = num,
             title = title,
+            pageid = pageid,
             description = snippet,
-            imgUrl = "",
             date = date,
-            isLast = false
         )
 
     } else{

@@ -2,10 +2,11 @@ package com.shortcut.explorer.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.datasource.network.model.OnFail
-import com.shortcut.explorer.business.datasource.network.search.toComic
+import com.shortcut.explorer.business.datasource.network.search.toQuery
 import com.shortcut.explorer.business.domain.NetworkErrorCode
+import com.shortcut.explorer.business.domain.model.Comic
+import com.shortcut.explorer.business.domain.model.SearchResult
 import com.shortcut.explorer.business.domain.model.Status
 import com.shortcut.explorer.business.repositories.RecentComicsRepository
 import com.shortcut.explorer.business.repositories.SearchComicsRepository
@@ -19,8 +20,8 @@ class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRe
     private val _recentComics = MutableLiveData<List<Comic>>(null)
     val recentComics:LiveData<List<Comic>> = _recentComics
 
-    private val _searchResult = MutableLiveData<List<Comic>>()
-    val searchResult:LiveData<List<Comic>> = _searchResult
+    private val _searchResult = MutableLiveData<List<SearchResult>>()
+    val searchResult:LiveData<List<SearchResult>> = _searchResult
 
     suspend fun getRecentComics(onFail: OnFail){
 
@@ -48,7 +49,7 @@ class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRe
                 Status.SUCCESS -> {
                     isEmpty.value = it.data?.query?.search.isNullOrEmpty()
                     _searchResult.value = it.data?.query?.search
-                        ?.mapNotNull { it.toComic() }
+                        ?.mapNotNull { it.toQuery() }
                 }
                 Status.ERROR -> onFail(it.message?:"" , it.errorCode?: NetworkErrorCode.EXCEPTION)
                 Status.LOADING -> Unit
