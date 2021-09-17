@@ -32,7 +32,7 @@ class RecentComicsRepositoryImpl(
         val lastComic = getLastComic { lastComic->
 
             repeat(RESENT_PAGE_ITEM_COUNT){
-                getComicByNumber(lastComic.num - 1){
+                getComicByNumber(lastComic.num - it - 1){
                         comicsList.add(it.toComic())
                 }
             }
