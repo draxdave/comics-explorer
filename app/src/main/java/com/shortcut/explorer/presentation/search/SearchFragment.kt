@@ -45,9 +45,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
     private fun initRecyclerView(){
         binding.list.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            val topSpacingDecorator = TopSpacingItemDecoration(16)
+            val topSpacingDecorator = TopSpacingItemDecoration(30)
             removeItemDecoration(topSpacingDecorator) // does nothing if not applied already
-            addItemDecoration(topSpacingDgiecorator)
+            addItemDecoration(topSpacingDecorator)
 
             recyclerAdapter = SearchResultListAdapter(this@SearchFragment)
             addOnScrollListener(object: RecyclerView.OnScrollListener(){

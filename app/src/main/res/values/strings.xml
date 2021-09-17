@@ -8,4 +8,5 @@
     <string name="search_comics_title">Search Comics</string>
     <string name="search_hint">Comic Number or Text</string>
     <string name="search_desc">Enter a part of the text or Comic number to start searching comics</string>
+    <string name="home_comics">Home</string>
 </resources>

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/fragment_recent"
-        android:title="@string/recent_comics"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/fragment_favorites"
+        android:icon="@drawable/ic_favorites"
         android:title="@string/favorite_comics"/>
 
+    <item android:id="@+id/fragment_recent"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home_comics"/>
+
     <item android:id="@+id/fragment_search"
+        android:icon="@drawable/ic_search"
         android:title="@string/search"/>
 </menu>
