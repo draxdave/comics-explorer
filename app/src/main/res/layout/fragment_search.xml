@@ -37,11 +37,12 @@
             android:id="@+id/inputFilter"
             android:hint="@string/search_hint"
             style="@style/textInput"
+            android:elevation="4dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:inputType="text"
             android:textSize="24sp"
-            android:paddingStart="64dp"
+            android:paddingStart="32dp"
             app:layout_constraintTop_toBottomOf="@id/help_tv"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>

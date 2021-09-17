@@ -48,7 +48,7 @@ class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRe
                 Status.SUCCESS -> {
                     isEmpty.value = it.data?.query?.search.isNullOrEmpty()
                     _searchResult.value = it.data?.query?.search
-                        ?.map { it.toComic() }
+                        ?.mapNotNull { it.toComic() }
                 }
                 Status.ERROR -> onFail(it.message?:"" , it.errorCode?: NetworkErrorCode.EXCEPTION)
                 Status.LOADING -> Unit

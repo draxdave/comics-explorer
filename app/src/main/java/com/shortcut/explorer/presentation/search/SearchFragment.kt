@@ -35,7 +35,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
 
     private fun initFilterInput() {
         binding.inputFilter.doAfterTextChanged { editable ->
-            editable?.toString()?.takeIf { it.length > 2 }?.let {
+            editable?.toString()?.takeIf { it.length > 1 }?.let {
                 searchComicsFor(it)
             }
         }

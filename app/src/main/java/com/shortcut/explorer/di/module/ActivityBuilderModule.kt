@@ -2,6 +2,7 @@ package com.shortcut.explorer.di.module
 
 import com.shortcut.explorer.presentation.MainActivity
 import com.shortcut.explorer.presentation.recent.RecentFragment
+import com.shortcut.explorer.presentation.search.SearchFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,4 +11,7 @@ interface ActivityBuilderModule {
 
     @ContributesAndroidInjector
     abstract fun contributeRecentFragmentInjection(): RecentFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSearchFragmentInjection(): SearchFragment
 }

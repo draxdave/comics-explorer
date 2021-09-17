@@ -91,6 +91,7 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     val kotlin: String by rootProject.extra
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin")

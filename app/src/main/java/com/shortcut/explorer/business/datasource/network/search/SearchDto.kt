@@ -14,26 +14,33 @@ data class SearchResult(
     val pageid:Int,
     val wordcount:Int,
     val snippet:String,
-    val timestamp:Instant
+    val timestamp:String
 )
 
-fun SearchResult.toComic():Comic{
-    val numAndTitle = title.split(":")
-    val num = numAndTitle
-        .first()
-        .toInt()
-    val title = numAndTitle[1]
+fun SearchResult.toComic():Comic?{
+    val divider = ":"
 
-    val dateFormat = SimpleDateFormat("dd/mm/yyyy", Locale.getDefault())
+    if (title.contains(divider)) {
+        val numAndTitle = title.split(divider)
+        val num = numAndTitle
+            .first()
+            .toInt()
+        val title = numAndTitle[1]
 
-    val date = dateFormat.format(Date.from(timestamp))
+        val dateFormat = SimpleDateFormat("dd/mm/yyyy", Locale.getDefault())
 
-    return Comic(
-        num = num,
-        title = title,
-        description = snippet,
-        imgUrl = "",
-        date = date,
-        isLast = false
-    )
+        val date = dateFormat.format(Date.from(Instant.parse(timestamp)))
+
+        return Comic(
+            num = num,
+            title = title,
+            description = snippet,
+            imgUrl = "",
+            date = date,
+            isLast = false
+        )
+
+    } else{
+        return null
+    }
 }
