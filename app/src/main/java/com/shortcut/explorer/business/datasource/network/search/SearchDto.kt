@@ -15,7 +15,7 @@ data class SearchResult(
     val title:String,
     val pageid:Int,
     val wordcount:Int,
-    val snippet:Spanned,
+    val snippet:String,
     val timestamp:String
 )
 

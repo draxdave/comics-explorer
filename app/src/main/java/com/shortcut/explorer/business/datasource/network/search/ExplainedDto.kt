@@ -13,7 +13,7 @@ data class Parsed(
 
 data class ParsedWikiText(
     @SerializedName("*")
-    val parsedWikiText:Spanned
+    val parsedWikiText:String
 )
 
 fun ExplainedDto.toExplanation() = parse.wikitext.parsedWikiText

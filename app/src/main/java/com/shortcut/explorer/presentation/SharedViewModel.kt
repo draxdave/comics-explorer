@@ -95,5 +95,6 @@ class SharedViewModel @Inject constructor(
         emit(
             recentRepo.getComicByNumber(pageNumber)
         )
+        setLoading(false)
     }
 }

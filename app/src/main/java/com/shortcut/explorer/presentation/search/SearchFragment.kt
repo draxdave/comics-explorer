@@ -5,16 +5,19 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.domain.model.SearchResult
+import com.shortcut.explorer.business.domain.model.toDetailedComic
 import com.shortcut.explorer.databinding.FragmentRecentBinding
 import com.shortcut.explorer.databinding.FragmentSearchBinding
 import com.shortcut.explorer.presentation.SharedViewModel
 import com.shortcut.explorer.presentation._base.BaseFragment
 import com.shortcut.explorer.presentation.recent.ComicsListAdapter
+import com.shortcut.explorer.presentation.recent.RecentFragmentDirections
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -89,13 +92,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
         }
     }
 
-    override fun onItemSelected(position: Int, item: SearchResult) {
-
-    }
+    override fun onItemSelected(position: Int, item: SearchResult) = gotoDetails(item)
 
     override fun onDestroyView() {
         super.onDestroyView()
         recyclerAdapter = null
     }
 
+    private fun gotoDetails(item: SearchResult) {
+        findNavController().navigate(
+            RecentFragmentDirections.toDetailsPage(
+                item.toDetailedComic()
+            )
+        )
+    }
 }

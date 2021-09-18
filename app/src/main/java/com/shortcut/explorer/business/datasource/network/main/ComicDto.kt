@@ -1,6 +1,5 @@
 package com.shortcut.explorer.business.datasource.network.main
 
-import android.text.Spanned
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
 import com.shortcut.explorer.business.domain.model.Comic
@@ -28,7 +27,7 @@ fun ComicDto.toComic(): Comic {
     return Comic(
         num = num,
         title = title,
-        description = parsedDescription.parseAsHtml(HtmlCompat.FROM_HTML_MODE_LEGACY),
+        description = parsedDescription,
         imgUrl = img,
         date = "$year/$month/$day",
         isLast = false

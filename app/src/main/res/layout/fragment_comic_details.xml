@@ -87,6 +87,7 @@
                     android:visibility="@{comic.explanation==null ? View.GONE: View.VISIBLE}"
                     android:textStyle="bold"
                     android:paddingStart="16dp"
+                    android:textColor="@color/colorPrimary"
                     android:paddingEnd="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -94,13 +95,13 @@
                 <TextView
                     android:id="@+id/comic_explanation"
                     app:layout_constraintTop_toBottomOf="@id/comic_explanation_tv"
-                    android:text="@{comic.explanation}"
+                    html="@{comic.explanation}"
                     android:paddingStart="16dp"
                     android:visibility="@{comic.explanation==null ? View.GONE: View.VISIBLE}"
                     android:textStyle="italic"
                     android:paddingEnd="16dp"
                     android:textSize="12sp"
-                    android:textColor="@color/purple_500"
+                    android:textColor="@color/colorSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
