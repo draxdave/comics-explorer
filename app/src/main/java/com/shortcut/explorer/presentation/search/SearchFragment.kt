@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.shortcut.explorer.business.domain.Constants
 import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.domain.model.SearchResult
 import com.shortcut.explorer.business.domain.model.toDetailedComic
@@ -87,9 +88,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
             // Cancellability
             delay(500L)
 
-            viewModel.searchComics(searchPhrase) { messsage, id ->
+            viewModel.searchComics(searchPhrase) { messsage, errorCode ->
 
-                message(if (messsage.isEmpty()) getString(id) else messsage)
+                message(
+                    if (messsage.isEmpty())
+                        getString(
+                            Constants.errorCodeToString(errorCode)
+                        )
+
+                    else
+                        messsage
+                )
 
             }
         }

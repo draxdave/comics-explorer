@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.shortcut.explorer.business.domain.Constants
 import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.domain.model.DetailedComic
 import com.shortcut.explorer.business.domain.model.toDetailedComic
@@ -73,9 +74,17 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(Frag
 
     private fun getRecentComics() {
         lifecycleScope.launchWhenResumed {
-            viewModel.getRecentComics { messsage, id ->
+            viewModel.getRecentComics { messsage, errorCode ->
 
-                message(if (messsage.isEmpty()) getString(id) else messsage)
+                message(
+                    if (messsage.isEmpty())
+                        getString(
+                            Constants.errorCodeToString(errorCode)
+                        )
+
+                    else
+                        messsage
+                )
 
             }
         }

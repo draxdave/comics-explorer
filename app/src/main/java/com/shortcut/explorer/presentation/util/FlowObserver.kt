@@ -2,6 +2,7 @@ package com.shortcut.explorer.presentation.util
 
 
 import com.shortcut.explorer.R
+import com.shortcut.explorer.business.domain.Constants
 import com.shortcut.explorer.business.domain.NetworkErrorCode
 import com.shortcut.explorer.business.domain.model.OnChange
 import com.shortcut.explorer.business.domain.model.Resource
@@ -39,18 +40,7 @@ class FlowObserver<E>(private val message: ((Int, String?)-> Unit)={ _, _->}
 
             if(it.status == Status.ERROR) {
 
-                    val message = when(it.errorCode){
-                        HttpURLConnection.HTTP_NOT_FOUND -> R.string.error_not_found
-                        NetworkErrorCode.CONNECT_EXCEPTION            -> R.string.network_unavailable
-                        NetworkErrorCode.SOCKET_TIME_OUT_EXCEPTION      -> R.string.network_unavailable
-                        NetworkErrorCode.UNKNOWN_HOST_EXCEPTION        -> R.string.network_unavailable
-                        in HttpURLConnection.HTTP_INTERNAL_ERROR..HttpURLConnection.HTTP_VERSION -> R.string.error_internal
-
-                        in HttpURLConnection.HTTP_UNAUTHORIZED..HttpURLConnection.HTTP_FORBIDDEN ->{
-                            R.string.error_unauthorized
-                        }
-                        else -> R.string.unknown_error
-                    }
+                    val message = Constants.errorCodeToString(it.errorCode)
 
                     // Display local message text if api response has not provided one.
                     if (it.message.isNullOrEmpty())
@@ -60,6 +50,7 @@ class FlowObserver<E>(private val message: ((Int, String?)-> Unit)={ _, _->}
         onChange(value)
     }
 }
+
 
 /**
  * Extension function to make it easy to observe flows.
