@@ -1,6 +1,7 @@
 package com.shortcut.explorer.business.datasource.db.favorites
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
@@ -11,6 +12,9 @@ interface FavoriteDao {
     @Delete
     suspend fun deleteFavorite(favoriteEntity: FavoriteEntity)
 
-    @Query("SELECT * FROM favorite_comics WHERE pk=:pageNumber")
-    suspend fun getAllBlogPosts(pageNumber: Int): List<FavoriteEntity>
+    @Query("SELECT * FROM favorite_comics WHERE pk=:pageNumber LIMIT 1")
+    suspend fun getFavorite(pageNumber: Int): Flow<FavoriteEntity>
+
+    @Query("SELECT * FROM favorite_comics")
+    suspend fun getAllFavorites(): Flow<List<FavoriteEntity>>
 }
