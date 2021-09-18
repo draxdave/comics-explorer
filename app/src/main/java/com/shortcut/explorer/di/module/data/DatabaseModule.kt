@@ -21,5 +21,9 @@ class DatabaseModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideFavoritesDao(mainDatabase: MainDatabase) = mainDatabase.getFavoriteDao()
+
 
 }
