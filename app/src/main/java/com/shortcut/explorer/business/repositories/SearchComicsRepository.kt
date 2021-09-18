@@ -24,7 +24,7 @@ class SearchComicsRepositoryImpl(
 ):SearchComicsRepository {
 
     override suspend fun search(string: String): Flow<Resource<SearchDto>> = flow {
-        emit(Resource.loading(null))
+        emit(Resource.loading())
 
         val result = networkWrapper.fetch {
             searchApiService.search(string)

@@ -16,7 +16,7 @@ interface RecentComicsRepository{
 
     suspend fun getRecentComics():Flow<Resource<List<Comic>>>
     suspend fun getLastComic(onSuccess: OnSuccess<ComicDto>):Resource<ComicDto>
-    suspend fun getComicByNumber(number:Int, onSuccess: OnSuccess<ComicDto>):Resource<ComicDto>
+    suspend fun getComicByNumber(number:Int, onSuccess: OnSuccess<ComicDto> = {}):Resource<ComicDto>
 }
 
 class RecentComicsRepositoryImpl(
@@ -25,7 +25,7 @@ class RecentComicsRepositoryImpl(
 ):RecentComicsRepository {
 
     override suspend fun getRecentComics(): Flow<Resource<List<Comic>>> =flow {
-        emit(Resource.loading(null))
+        emit(Resource.loading())
 
         val comicsList = mutableListOf<Comic>()
 

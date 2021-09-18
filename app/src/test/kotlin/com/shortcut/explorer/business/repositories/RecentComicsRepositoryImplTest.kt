@@ -134,7 +134,7 @@ internal class `Recent Comics Repository Tested for` {
     @Nested
     inner class `getting recent comics and`{
 
-        val loading: Resource<ComicDto> =  Resource.loading(null)
+        val loading: Resource<ComicDto> =  Resource.loading()
         val emptyResponse = Resource.success(TempData.getComicDtos(0))
         val nonEmptyResponse = Resource.success(TempData.getComicDtos(Constants.RESENT_PAGE_ITEM_COUNT))
         val networkError = TempData.networkError<ComicDto>()

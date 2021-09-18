@@ -19,7 +19,7 @@ class ExplainComicRepositoryImpl @Inject constructor(
     ExplainComicRepository {
 
     override suspend fun getExplanation(pageId: Int): Flow<Resource<ExplainedDto>> = flow {
-        emit(Resource.loading(null))
+        emit(Resource.loading())
 
         val result = networkWrapper.fetch {
             searchApiService.getExplanation(pageId)

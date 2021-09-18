@@ -2,10 +2,12 @@ package com.shortcut.explorer.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.shortcut.explorer.business.datasource.network.main.ComicDto
 import com.shortcut.explorer.business.datasource.network.model.OnFail
 import com.shortcut.explorer.business.datasource.network.search.toQuery
 import com.shortcut.explorer.business.domain.NetworkErrorCode
 import com.shortcut.explorer.business.domain.model.Comic
+import com.shortcut.explorer.business.domain.model.Resource
 import com.shortcut.explorer.business.domain.model.SearchResult
 import com.shortcut.explorer.business.domain.model.Status
 import com.shortcut.explorer.business.repositories.ExplainComicRepository
@@ -19,7 +21,7 @@ class SharedViewModel @Inject constructor(
     private val recentRepo: RecentComicsRepository,
     private val explainComicRepository: ExplainComicRepository,
     private val searchComicsRepository: SearchComicsRepository
-    )
+)
     : BaseViewModel() {
 
     //=============== Recent Comics
@@ -82,5 +84,12 @@ class SharedViewModel @Inject constructor(
 
     suspend fun retrieveComicExplanation(pageId:Int) = explainComicRepository.getExplanation(pageId).onEach {
         setLoading(it.status == Status.LOADING)
+    }
+
+    suspend fun retrieveComic(pageId:Int):Flow<Resource<ComicDto>> = flow {
+        emit(Resource.loading())
+        emit(
+            recentRepo.getComicByNumber(pageId)
+        )
     }
 }
