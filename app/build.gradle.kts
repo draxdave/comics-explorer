@@ -146,13 +146,15 @@ dependencies {
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
 
 
-
-
-
     // Glide
     val glideVersion = "4.10.0"
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     kapt("com.github.bumptech.glide:compiler:$glideVersion")
+
+
+    //UI Utils
+    val androidUtil = "0.5.16"
+    implementation("com.github.draxdave.androidutil:modal:$androidUtil")
 
 
 

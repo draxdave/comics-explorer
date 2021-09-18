@@ -19,6 +19,7 @@ import com.shortcut.explorer.databinding.FragmentSearchBinding
 import com.shortcut.explorer.presentation.SharedViewModel
 import com.shortcut.explorer.presentation._base.BaseFragment
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
+import com.shortcut.explorer.presentation.util.message
 import com.shortcut.explorer.presentation.util.observe
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -61,7 +62,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedVie
                 explanationFlow.observe(
 
                     { id,string->
-                        // Display message
+                        message(if (string.isNullOrEmpty()) getString(id) else string)
                     }
 
                 ) {
@@ -82,7 +83,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedVie
 
                     { id,string->
 
-                        // Display message
+                        message(if (string.isNullOrEmpty()) getString(id) else string)
 
                     }
 

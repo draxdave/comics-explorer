@@ -11,6 +11,8 @@ buildscript {
         mavenCentral()
         mavenLocal()
         google()
+        maven("https://jitpack.io")
+
     }
 
     dependencies {

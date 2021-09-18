@@ -16,6 +16,7 @@ import com.shortcut.explorer.databinding.FragmentRecentBinding
 import com.shortcut.explorer.presentation.SharedViewModel
 import com.shortcut.explorer.presentation._base.BaseFragment
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
+import com.shortcut.explorer.presentation.util.message
 
 class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(FragmentRecentBinding::inflate),
     SwipeRefreshLayout.OnRefreshListener, ComicsListAdapter.Interaction {
@@ -73,7 +74,9 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(Frag
     private fun getRecentComics() {
         lifecycleScope.launchWhenResumed {
             viewModel.getRecentComics { messsage, id ->
-                // display error message.
+
+                message(if (messsage.isEmpty()) getString(id) else messsage)
+
             }
         }
     }

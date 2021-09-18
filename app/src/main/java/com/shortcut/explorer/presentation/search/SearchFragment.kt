@@ -19,6 +19,7 @@ import com.shortcut.explorer.presentation._base.BaseFragment
 import com.shortcut.explorer.presentation.recent.ComicsListAdapter
 import com.shortcut.explorer.presentation.recent.RecentFragmentDirections
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
+import com.shortcut.explorer.presentation.util.message
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
@@ -87,7 +88,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
             delay(500L)
 
             viewModel.searchComics(searchPhrase) { messsage, id ->
-                // display error message.
+
+                message(if (messsage.isEmpty()) getString(id) else messsage)
+
             }
         }
     }
