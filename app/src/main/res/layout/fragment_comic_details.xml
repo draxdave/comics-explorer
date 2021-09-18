@@ -29,63 +29,93 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/image"
-            imageFromUrl="@{comic.imgUrl}"
+            android:id="@+id/back"
+            app:layout_constraintTop_toTopOf="@id/title_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/title_tv"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ScrollView
             app:layout_constraintTop_toBottomOf="@id/title_tv"
-            android:scaleType="fitXY"
-            android:minHeight="256dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image"
+                    imageFromUrl="@{comic.imgUrl}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="fitXY"
+                    android:minHeight="256dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/comic_title"
+                    app:layout_constraintTop_toBottomOf="@id/image"
+                    android:text="@{comic.title}"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/comic_description"
+                    app:layout_constraintTop_toBottomOf="@id/comic_title"
+                    android:text="@{comic.description}"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/comic_explanation_tv"
+                    app:layout_constraintTop_toBottomOf="@id/comic_description"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/comic_explanation"
+                    android:visibility="@{comic.explanation==null ? View.GONE: View.VISIBLE}"
+                    android:textStyle="bold"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/comic_explanation"
+                    app:layout_constraintTop_toBottomOf="@id/comic_explanation_tv"
+                    android:text="@{comic.explanation}"
+                    android:paddingStart="16dp"
+                    android:visibility="@{comic.explanation==null ? View.GONE: View.VISIBLE}"
+                    android:textStyle="italic"
+                    android:paddingEnd="16dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/purple_500"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:visibility="@{model.isLoading()? View.VISIBLE: View.INVISIBLE}"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/accent"
+            app:layout_constraintTop_toBottomOf="@id/title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/comic_title"
-            app:layout_constraintTop_toBottomOf="@id/image"
-            android:text="@{comic.title}"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/comic_description"
-            app:layout_constraintTop_toBottomOf="@id/comic_title"
-            android:text="@{comic.description}"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="13sp"
-            android:textColor="@color/colorSecondary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/comic_explanation_tv"
-            app:layout_constraintTop_toBottomOf="@id/comic_description"
-            android:layout_marginTop="16dp"
-            android:text="@string/comic_explanation"
-            android:visibility="@{comic.explanation==null ? View.GONE: View.VISIBLE}"
-            android:textStyle="bold"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/comic_explanation"
-            app:layout_constraintTop_toBottomOf="@id/comic_explanation_tv"
-            android:text="@{comic.explanation}"
-            android:paddingStart="16dp"
-            android:visibility="@{comic.explanation==null ? View.GONE: View.VISIBLE}"
-            android:textStyle="italic"
-            android:paddingEnd="16dp"
-            android:textSize="12sp"
-            android:textColor="@color/purple_500"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:contentDescription="@{comic.description}"
@@ -98,15 +128,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progress"
-            android:visibility="@{model.isLoading()? View.VISIBLE: View.INVISIBLE}"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/accent"
-            app:layout_constraintTop_toBottomOf="@id/title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

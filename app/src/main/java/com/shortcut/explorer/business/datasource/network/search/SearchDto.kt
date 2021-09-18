@@ -1,5 +1,6 @@
 package com.shortcut.explorer.business.datasource.network.search
 
+import android.text.Spanned
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
 import java.text.SimpleDateFormat
@@ -14,7 +15,7 @@ data class SearchResult(
     val title:String,
     val pageid:Int,
     val wordcount:Int,
-    val snippet:String,
+    val snippet:Spanned,
     val timestamp:String
 )
 
@@ -36,7 +37,7 @@ fun SearchResult.toQuery(): com.shortcut.explorer.business.domain.model.SearchRe
             num = num,
             title = title,
             pageid = pageid,
-            description = snippet.parseAsHtml(HtmlCompat.FROM_HTML_MODE_LEGACY),
+            description = snippet,
             date = date,
         )
 

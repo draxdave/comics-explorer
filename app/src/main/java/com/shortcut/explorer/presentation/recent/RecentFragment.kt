@@ -1,13 +1,17 @@
 package com.shortcut.explorer.presentation.recent
 
 import android.os.Bundle
+import android.text.Spanned
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.shortcut.explorer.business.domain.model.Comic
+import com.shortcut.explorer.business.domain.model.DetailedComic
+import com.shortcut.explorer.business.domain.model.toDetailedComic
 import com.shortcut.explorer.databinding.FragmentRecentBinding
 import com.shortcut.explorer.presentation.SharedViewModel
 import com.shortcut.explorer.presentation._base.BaseFragment
@@ -79,8 +83,14 @@ class RecentFragment : BaseFragment<FragmentRecentBinding, SharedViewModel>(Frag
         getRecentComics()
     }
 
-    override fun onItemSelected(position: Int, item: Comic) {
+    override fun onItemSelected(position: Int, item: Comic) = gotoDetails(item)
 
+    private fun gotoDetails(item: Comic) {
+        findNavController().navigate(
+            RecentFragmentDirections.toDetailsPage(
+                item.toDetailedComic()
+            )
+        )
     }
 
     override fun onDestroyView() {

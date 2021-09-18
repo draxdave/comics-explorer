@@ -1,8 +1,11 @@
 package com.shortcut.explorer.di.module.data
 
+import android.text.Spanned
+import com.google.gson.GsonBuilder
 import com.shortcut.explorer.BuildConfig
 import com.shortcut.explorer.business.datasource.network.main.MainApiService
 import com.shortcut.explorer.business.datasource.network.NetworkWrapper
+import com.shortcut.explorer.business.datasource.network.model.SpannedTypeAdapter
 import com.shortcut.explorer.business.datasource.network.search.SearchApiService
 import dagger.Module
 import dagger.Provides
@@ -39,23 +42,37 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMainApiService(okHttpClient: OkHttpClient): MainApiService {
+    fun provideMainApiService(okHttpClient: OkHttpClient, gsonConverter:GsonConverterFactory): MainApiService {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BuildConfig.MAIN_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(gsonConverter)
             .build()
             .create()
     }
 
     @Provides
     @Singleton
-    fun provideSearchApiService(okHttpClient: OkHttpClient): SearchApiService {
+    fun provideSearchApiService(okHttpClient: OkHttpClient, gsonConverter:GsonConverterFactory)
+    : SearchApiService {
+
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BuildConfig.SEARCH_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(gsonConverter)
             .build()
             .create()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideGsonConverterFactory(): GsonConverterFactory {
+        val gsonBuilder = GsonBuilder()
+        gsonBuilder.registerTypeAdapter(Spanned::class.java, SpannedTypeAdapter())
+
+        return GsonConverterFactory.create(
+            gsonBuilder.create()
+        )
     }
 }

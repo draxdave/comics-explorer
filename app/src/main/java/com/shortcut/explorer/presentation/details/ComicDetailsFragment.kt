@@ -41,6 +41,9 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedVie
         }else
             subscribeObservers(comic)
 
+        binding.back.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun getDetails(comic: DetailedComic) {

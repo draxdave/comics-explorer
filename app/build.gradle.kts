@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
 
     kotlin("kapt")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -140,6 +141,12 @@ dependencies {
     val nav_version = "2.3.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    // Dynamic Feature Module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+
+
 
 
     // Glide

@@ -7,15 +7,35 @@
 
     <fragment tools:layout="@layout/fragment_recent"
         android:name="com.shortcut.explorer.presentation.recent.RecentFragment"
-        android:id="@+id/fragment_recent"/>
+        android:id="@+id/fragment_recent">
+        <action android:id="@+id/toDetailsPage"
+            app:destination="@id/fragment_details"
+            />
+    </fragment>
 
     <fragment tools:layout="@layout/fragment_recent"
         android:name="com.shortcut.explorer.presentation.recent.RecentFragment"
-        android:id="@+id/fragment_favorites"/>
+        android:id="@+id/fragment_favorites">
+        <action android:id="@+id/toDetailsPage"
+            app:destination="@id/fragment_details"
+            />
+    </fragment>
 
     <fragment tools:layout="@layout/fragment_search"
         android:name="com.shortcut.explorer.presentation.search.SearchFragment"
-        android:id="@+id/fragment_search"/>
+        android:id="@+id/fragment_search">
+        <action android:id="@+id/toDetailsPage"
+            app:destination="@id/fragment_details"
+            />
+    </fragment>
+
+    <fragment tools:layout="@layout/fragment_comic_details"
+        android:name="com.shortcut.explorer.presentation.details.ComicDetailsFragment"
+        android:id="@+id/fragment_details">
+        <argument android:name="serialized_comic"
+            app:argType="com.shortcut.explorer.business.domain.model.DetailedComic"
+            app:nullable="false"/>
+    </fragment>
 
 
 </navigation>

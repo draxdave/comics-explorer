@@ -1,6 +1,7 @@
 package com.shortcut.explorer.business.domain.model
 
 import android.text.Spanned
+import java.io.Serializable
 
 data class DetailedComic(
     val pId: Int?,
@@ -12,4 +13,4 @@ data class DetailedComic(
     var explanation: Spanned?,
     var isCached:Boolean,
     var isLast:Boolean
-)
+):Serializable
