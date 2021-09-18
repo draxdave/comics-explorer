@@ -7,7 +7,7 @@ data class DetailedComic(
     val num: Int,
     val title: String,
     val description: Spanned,
-    val imgUrl: String?,
+    var imgUrl: String?,
     val date: String,
     var explanation: Spanned?,
     var isCached:Boolean,

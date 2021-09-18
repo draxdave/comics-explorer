@@ -32,47 +32,77 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        comicObj.observe(viewLifecycleOwner){
-            binding.comic = it
-        }
 
         val comic = arguments?.getSerializable(Constants.SERIALIZABLE_COMIC_OBJECT_NAME) as DetailedComic?
         if (comic==null) {
             // Throw error
             findNavController().navigateUp()
 
-        }else {
-            comicObj.value = comic
+        }else
+            subscribeObservers(comic)
 
-            getDetails(comic)
-        }
     }
 
     private fun getDetails(comic: DetailedComic) {
         lifecycleScope.launchWhenResumed {
 
-            val explanationFlow =
-                if (comic.pId==null)
-                    viewModel.retrieveComicExplanationByPage("${comic.num}: ${comic.title}")
+            if(comic.explanation==null){
 
-                else
-                    viewModel.retrieveComicExplanationByPage("${comic.num}: ${comic.title}")
+                val explanationFlow =
+                    if (comic.pId==null)
+                        viewModel.retrieveComicExplanationByPage("${comic.num}: ${comic.title}")
 
-            explanationFlow.observe({id,string->
-                // Display message
-            }) {
-                it.status.onSuccess {
-                    comicObj.value = comicObj.value?.apply {
-                        explanation = it.data?.toExplanation()
+                    else
+                        viewModel.retrieveComicExplanationByPage("${comic.num}: ${comic.title}")
+
+                explanationFlow.observe(
+
+                    { id,string->
+                        // Display message
+                    }
+
+                ) {
+                    it.status.onSuccess {
+
+                        comicObj.value = comicObj.value?.apply {
+                            explanation = it.data?.toExplanation()
+                        }
+
                     }
                 }
+
             }
+
+            if (comic.imgUrl == null)
+
+                viewModel.retrieveComic(comic.num).observe(
+
+                    { id,string->
+
+                        // Display message
+
+                    }
+
+                ) {
+                    it.status.onSuccess {
+
+                        comicObj.value = comicObj.value?.apply {
+                            imgUrl = it.data?.img
+                        }
+
+                    }
+                }
         }
     }
 
 
-    private fun subscribeObservers(){
+    private fun subscribeObservers(comic: DetailedComic){
+        comicObj.observe(viewLifecycleOwner){
+            binding.comic = it
+        }
 
+        comicObj.value = comic
 
+        getDetails(comic)
     }
 }

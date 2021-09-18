@@ -90,10 +90,10 @@ class SharedViewModel @Inject constructor(
         setLoading(it.status == Status.LOADING)
     }
 
-    suspend fun retrieveComic(pageId:Int):Flow<Resource<ComicDto>> = flow {
+    suspend fun retrieveComic(pageNumber:Int):Flow<Resource<ComicDto>> = flow {
         setLoading(true)
         emit(
-            recentRepo.getComicByNumber(pageId)
+            recentRepo.getComicByNumber(pageNumber)
         )
     }
 }
