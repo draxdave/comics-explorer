@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="model"
+            type="com.shortcut.explorer.presentation.SharedViewModel" />
+        <variable
+            name="comic"
+            type="com.shortcut.explorer.business.domain.model.Comic" />
+        <variable
+            name="explanation"
+            type="android.text.Spanned" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:background="@color/white"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="@{comic.title}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image"
+            imageFromUrl="@{comic.imgUrl}"
+            app:layout_constraintTop_toBottomOf="@id/title_tv"
+            android:scaleType="fitXY"
+            android:minHeight="256dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comic_title"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            android:text="@{comic.title}"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comic_description"
+            app:layout_constraintTop_toBottomOf="@id/comic_title"
+            android:text="@{comic.description}"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="13sp"
+            android:textColor="@color/colorSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comic_explanation_tv"
+            app:layout_constraintTop_toBottomOf="@id/comic_description"
+            android:layout_marginTop="16dp"
+            android:text="@string/comic_explanation"
+            android:visibility="@{explanation==null ? View.GONE: View.VISIBLE}"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comic_explanation"
+            app:layout_constraintTop_toBottomOf="@id/comic_explanation_tv"
+            android:text="@{explanation}"
+            android:paddingStart="16dp"
+            android:visibility="@{explanation==null ? View.GONE: View.VISIBLE}"
+            android:textStyle="italic"
+            android:paddingEnd="16dp"
+            android:textSize="12sp"
+            android:textColor="@color/purple_500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:contentDescription="@{comic.description}"
+            android:id="@+id/share_fab"
+            android:visibility="@{model.isLoading() ? View.GONE: View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="?attr/actionBarSize"
+            android:src="@drawable/ic_outline_share_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:visibility="@{model.isLoading()? View.VISIBLE: View.INVISIBLE}"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/accent"
+            app:layout_constraintTop_toBottomOf="@id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -2,7 +2,7 @@
 <resources>
     <style name="roundedImageView">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">24dp</item>
     </style>
 
     <style name="textInput" parent="Widget.AppCompat.EditText">

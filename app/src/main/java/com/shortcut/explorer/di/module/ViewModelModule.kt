@@ -1,5 +1,6 @@
 package com.shortcut.explorer.di.module
 
+import com.shortcut.explorer.business.repositories.ExplainComicRepository
 import com.shortcut.explorer.business.repositories.RecentComicsRepository
 import com.shortcut.explorer.business.repositories.SearchComicsRepository
 import com.shortcut.explorer.presentation.SharedViewModel
@@ -12,6 +13,14 @@ class ViewModelModule{
 
     @Provides
     @Singleton
-    fun provideRecentViewmodel(recentComicsRepository: RecentComicsRepository, searchComicsRepository: SearchComicsRepository) = SharedViewModel(recentComicsRepository,searchComicsRepository)
-    
+    fun provideRecentViewmodel(
+        recentComicsRepository: RecentComicsRepository,
+        searchComicsRepository: SearchComicsRepository,
+        explainComicRepository: ExplainComicRepository
+    ) = SharedViewModel(
+        recentComicsRepository,
+        explainComicRepository,
+        searchComicsRepository
+    )
+
 }
