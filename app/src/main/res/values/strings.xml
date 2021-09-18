@@ -10,4 +10,13 @@
     <string name="search_desc">Enter a part of the text or Comic number to start searching comics</string>
     <string name="home_comics">Home</string>
     <string name="comic_explanation">Explanation</string>
+
+    <!--Network error handling part-->
+    <string name="error_not_found">The request cannot be processed! Please inform the application team if this message appears.</string>
+    <string name="network_unavailable">Network error! Please make sure internet connection is available.</string>
+    <string name="error_internal">Internal server error! Please try again later on.</string>
+    <string name="error_unauthorized">Unauthorized access error! Please sign in then try again.</string>
+    <string name="unknown_error">Something went wrong! Stay calm and call application team if this message popped again.</string>
+    <!--End of Network error handling part-->
+
 </resources>

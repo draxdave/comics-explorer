@@ -12,5 +12,15 @@ sealed class Status {
     object SUCCESS : Status()
     object ERROR : Status()
     object LOADING : Status()
+
+    inline fun onSuccess(onSuccess:()->Unit){
+     if (this == SUCCESS)
+         onSuccess.invoke()
+    }
+
+    inline fun onFail(onFail:()->Unit){
+     if (this == ERROR)
+         onFail.invoke()
+    }
 }
 

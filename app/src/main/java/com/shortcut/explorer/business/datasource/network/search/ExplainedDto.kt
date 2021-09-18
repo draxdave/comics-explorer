@@ -1,5 +1,6 @@
 package com.shortcut.explorer.business.datasource.network.search
 
+import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 
 class ExplainedDto(val parse:Parsed)
@@ -12,5 +13,7 @@ data class Parsed(
 
 data class ParsedWikiText(
     @SerializedName("*")
-    val parsedWikiText:String
+    val parsedWikiText:Spanned
 )
+
+fun ExplainedDto.toExplanation() = parse.wikitext.parsedWikiText
