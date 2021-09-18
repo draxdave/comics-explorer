@@ -8,25 +8,29 @@ import com.shortcut.explorer.business.domain.NetworkErrorCode
 import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.domain.model.SearchResult
 import com.shortcut.explorer.business.domain.model.Status
+import com.shortcut.explorer.business.repositories.ExplainComicRepository
 import com.shortcut.explorer.business.repositories.RecentComicsRepository
 import com.shortcut.explorer.business.repositories.SearchComicsRepository
 import com.shortcut.explorer.presentation._base.BaseViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRepository, private val searchComicsRepository: SearchComicsRepository)
+class SharedViewModel @Inject constructor(
+    private val recentRepo: RecentComicsRepository,
+    private val explainComicRepository: ExplainComicRepository,
+    private val searchComicsRepository: SearchComicsRepository
+    )
     : BaseViewModel() {
+
+    //=============== Recent Comics
 
     private val _recentComics = MutableLiveData<List<Comic>>(null)
     val recentComics:LiveData<List<Comic>> = _recentComics
 
-    private val _searchResult = MutableLiveData<List<SearchResult>>()
-    val searchResult:LiveData<List<SearchResult>> = _searchResult
-
     suspend fun getRecentComics(onFail: OnFail){
 
         recentRepo.getRecentComics().collect {
-            isLoading.value = it.status == Status.LOADING
+            setLoading(it.status == Status.LOADING)
 
             when(it.status) {
                 Status.SUCCESS -> {
@@ -40,10 +44,21 @@ class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRe
         }
     }
 
+    fun loadMore() {
+
+    }
+
+    //End of =============== Recent Comics
+
+    //=============== Search Comics
+
+    private val _searchResult = MutableLiveData<List<SearchResult>>()
+    val searchResult:LiveData<List<SearchResult>> = _searchResult
+
     suspend fun searchComics(searchPhrase:String, onFail: OnFail){
 
         searchComicsRepository.search(searchPhrase).collect {
-            isLoading.value = it.status == Status.LOADING
+            setLoading(it.status == Status.LOADING)
 
             when(it.status) {
                 Status.SUCCESS -> {
@@ -54,18 +69,18 @@ class SharedViewModel @Inject constructor(private val recentRepo: RecentComicsRe
                 Status.ERROR -> onFail(it.message?:"" , it.errorCode?: NetworkErrorCode.EXCEPTION)
                 Status.LOADING -> Unit
             }
-
         }
-    }
-
-
-
-    fun loadMore() {
-
     }
 
     fun loadMoreSearchResults() {
 
     }
 
+    //End of =============== Search Comics
+
+    //=============== Comic Details
+
+    suspend fun retrieveComicExplanation(pageId:Int) = explainComicRepository.getExplanation(pageId).onEach {
+        setLoading(it.status == Status.LOADING)
+    }
 }
