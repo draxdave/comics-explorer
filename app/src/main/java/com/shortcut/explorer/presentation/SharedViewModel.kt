@@ -82,7 +82,7 @@ class SharedViewModel @Inject constructor(
 
     //=============== Comic Details
 
-    suspend fun retrieveComicExplanation(pageId:Int) = explainComicRepository.getExplanation(pageId).onEach {
+    suspend fun retrieveComicExplanation(pageId:Int) = explainComicRepository.getExplanationByPageId(pageId).onEach {
         setLoading(it.status == Status.LOADING)
     }
 

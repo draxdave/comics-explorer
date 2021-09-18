@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface ExplainComicRepository {
-    suspend fun getExplanation(pageId:Int): Flow<Resource<ExplainedDto>>
+    suspend fun getExplanationByPageId(pageId:Int): Flow<Resource<ExplainedDto>>
+    suspend fun getExplanationByPage(page:String): Flow<Resource<ExplainedDto>>
 }
 
 class ExplainComicRepositoryImpl @Inject constructor(
@@ -18,11 +19,21 @@ class ExplainComicRepositoryImpl @Inject constructor(
 ):
     ExplainComicRepository {
 
-    override suspend fun getExplanation(pageId: Int): Flow<Resource<ExplainedDto>> = flow {
+    override suspend fun getExplanationByPageId(pageId: Int): Flow<Resource<ExplainedDto>> = flow {
         emit(Resource.loading())
 
         val result = networkWrapper.fetch {
-            searchApiService.getExplanation(pageId)
+            searchApiService.getExplanationByPageId(pageId)
+        }
+
+        emit(result)
+    }
+
+    override suspend fun getExplanationByPage(page : String): Flow<Resource<ExplainedDto>> = flow {
+        emit(Resource.loading())
+
+        val result = networkWrapper.fetch {
+            searchApiService.getExplanationByPage(page)
         }
 
         emit(result)

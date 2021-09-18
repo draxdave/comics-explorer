@@ -11,6 +11,9 @@ interface SearchApiService {
     suspend fun search(@Query("srsearch") searchKey : String): Response<SearchDto>
 
     @GET("wiki/api.php?action=parse&prop=wikitext&section=1&format=json")
-    suspend fun getExplanation(@Query("pageid") pid : Int): Response<ExplainedDto>
+    suspend fun getExplanationByPageId(@Query("pageid") pid : Int): Response<ExplainedDto>
+
+    @GET("https://www.explainxkcd.com/wiki/api.php?action=parse&prop=wikitext&section=1&format=json")
+    suspend fun getExplanationByPage(@Query("page") page : String): Response<ExplainedDto>
 
 }
