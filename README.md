@@ -3,7 +3,7 @@
 Sample project to demonstrate my android skills for the tech interview at 'Shortcut'.
 
 ### Technologies
-* `Arcitecture`: MVVM
+* `Architecture`: MVVM
 * `Database`: Room
 * `DI`: Dagger2
 * `Thread system`: Kotlin coroutines
@@ -16,10 +16,10 @@ Sample project to demonstrate my android skills for the tech interview at 'Short
 
 - [x] browse through the comics,
 - [x] see the comic details, including its description,
-- [ ] search for comics by the comic number as well as the t,
-- [ ] get the comic explanation
-- [ ] favorite the comics, which would be available offline too,
-- [ ] send comics to others,
+- [x] search for comics by the comic number as well as the the comic title,
+- [x] get the comic explanation
+- [x] favorite the comics, which would be available offline too,
+- [x] send comics to others,
 - [ ] get notifications when a new comic is published,
 - [ ] support multiple form factors.
 

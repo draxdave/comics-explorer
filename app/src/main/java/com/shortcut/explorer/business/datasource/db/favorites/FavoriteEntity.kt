@@ -39,6 +39,7 @@ fun FavoriteEntity.toDetailedComic() = DetailedComic(
         num = num,
         title = title,
         description = description,
+        explanation = explanation,
         imgUrl = imgUrl,
         date = date,
         isLast = false

@@ -29,6 +29,7 @@ fun ComicDto.toComic(): Comic {
         num = num,
         title = title,
         description = parsedDescription,
+        explanation = null,
         imgUrl = img,
         date = "$year/$month/$day",
         isLast = false

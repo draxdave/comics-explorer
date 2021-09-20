@@ -78,7 +78,9 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding, SharedViewModel
         }
     }
 
-    override fun onItemSelected(position: Int, item: Comic) = gotoDetails(item)
+    override fun onItemSelected(position: Int, item: Comic) {
+        gotoDetails(item)
+    }
 
     private fun gotoDetails(item: Comic) {
         findNavController().navigate(
