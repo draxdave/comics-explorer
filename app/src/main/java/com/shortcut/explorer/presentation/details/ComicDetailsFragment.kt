@@ -1,5 +1,6 @@
 package com.shortcut.explorer.presentation.details
 
+import android.R.attr
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,17 @@ import com.shortcut.explorer.presentation.util.message
 import com.shortcut.explorer.presentation.util.observe
 import com.shortcut.explorer.presentation.util.observeOnceNotNull
 import kotlinx.coroutines.InternalCoroutinesApi
+import android.content.Intent
+
+import android.R.attr.bitmap
+import android.content.ClipDescription
+import android.graphics.Bitmap
+import android.net.Uri
+
+import android.provider.MediaStore
+
+
+
 
 @InternalCoroutinesApi
 class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedViewModel>(FragmentComicDetailsBinding::inflate){
@@ -60,6 +72,22 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedVie
         comicObj.observeOnceNotNull(viewLifecycleOwner){
 
         }
+    }
+
+    private fun share(bitmap: Bitmap, title:String, description: String){
+        val bitmapPath: String =
+            MediaStore.Images.Media.insertImage(requireActivity().contentResolver, bitmap, title, description)
+        val bitmapUri: Uri = Uri.parse(bitmapPath)
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "image/png"
+        intent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
+        intent.putExtra(
+            Intent.EXTRA_TEXT,
+            "Hey, Check this out:\n$title\n\n$description"
+        )
+
+        startActivity(Intent.createChooser(intent, "Share with"))
     }
 
     private fun getDetails(comic: DetailedComic) {
