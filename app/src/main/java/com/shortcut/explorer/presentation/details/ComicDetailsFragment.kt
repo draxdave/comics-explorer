@@ -25,8 +25,11 @@ import android.graphics.Bitmap
 import android.net.Uri
 
 import android.provider.MediaStore
-
-
+import androidx.core.graphics.drawable.toBitmap
+import java.io.File
+import android.R.attr.bitmap
+import com.shortcut.explorer.R
+import java.io.FileOutputStream
 
 
 @InternalCoroutinesApi
@@ -70,24 +73,21 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, SharedVie
 
     private fun shareComic() {
         comicObj.observeOnceNotNull(viewLifecycleOwner){
-
+            share("${it.title}\n\n${it.description}\n\nhttps://xkcd.com/${it.num}/")
         }
     }
 
-    private fun share(bitmap: Bitmap, title:String, description: String){
-        val bitmapPath: String =
-            MediaStore.Images.Media.insertImage(requireActivity().contentResolver, bitmap, title, description)
-        val bitmapUri: Uri = Uri.parse(bitmapPath)
+    private fun share(text: String) {
+        try {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/*"
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Check this comic out!")
+            intent.putExtra(Intent.EXTRA_TEXT, text)
+            requireContext().startActivity(Intent.createChooser(intent, "Share with"))
 
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "image/png"
-        intent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-        intent.putExtra(
-            Intent.EXTRA_TEXT,
-            "Hey, Check this out:\n$title\n\n$description"
-        )
-
-        startActivity(Intent.createChooser(intent, "Share with"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getDetails(comic: DetailedComic) {
