@@ -4,7 +4,7 @@ import android.text.Spanned
 
 data class SearchResult(
     val title:String,
-    val pageid:Int,
+    val pageid:Int?,
     val num: Int,
     val description: String,
     val date: String

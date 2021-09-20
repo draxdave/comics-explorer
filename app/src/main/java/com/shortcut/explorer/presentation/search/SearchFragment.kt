@@ -9,9 +9,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.shortcut.explorer.business.datasource.network.main.toComic
+import com.shortcut.explorer.business.datasource.network.main.toSearchResult
 import com.shortcut.explorer.business.domain.Constants
 import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.domain.model.SearchResult
+import com.shortcut.explorer.business.domain.model.Status
 import com.shortcut.explorer.business.domain.model.toDetailedComic
 import com.shortcut.explorer.databinding.FragmentRecentBinding
 import com.shortcut.explorer.databinding.FragmentSearchBinding
@@ -21,9 +24,13 @@ import com.shortcut.explorer.presentation.recent.ComicsListAdapter
 import com.shortcut.explorer.presentation.recent.RecentFragmentDirections
 import com.shortcut.explorer.presentation.util.TopSpacingItemDecoration
 import com.shortcut.explorer.presentation.util.message
+import com.shortcut.explorer.presentation.util.observe
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 
+@InternalCoroutinesApi
 class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(FragmentSearchBinding::inflate),
     SearchResultListAdapter.Interaction {
 
@@ -42,7 +49,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
     private fun initFilterInput() {
         binding.inputFilter.doAfterTextChanged { editable ->
             editable?.toString()?.takeIf { it.length > 1 }?.let {
-                searchComicsFor(it)
+                val isComicNumber = it.matches(Regex("^[0-9]*$"))
+
+                searchComicsFor(it, isComicNumber = isComicNumber)
             }
         }
     }
@@ -81,25 +90,34 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SharedViewModel>(Frag
         })
     }
 
-    private fun searchComicsFor(searchPhrase:String) {
+    private fun searchComicsFor(searchPhrase:String, isComicNumber:Boolean) {
         searchJob?.cancel()
 
         searchJob = lifecycleScope.launchWhenResumed {
             // Cancellability
             delay(500L)
 
-            viewModel.searchComics(searchPhrase) { messsage, errorCode ->
+            if (isComicNumber){
+                viewModel.retrieveComic(searchPhrase.toInt()).observe {
 
-                message(
-                    if (messsage.isEmpty())
-                        getString(
-                            Constants.errorCodeToString(errorCode)
-                        )
+                    if (it.status==Status.SUCCESS && it.data!=null)
+                        recyclerAdapter?.submitList(listOf(it.data.toSearchResult()))
 
-                    else
-                        messsage
-                )
+                }
 
+            }else {
+                viewModel.searchComics(searchPhrase) { messsage, errorCode ->
+
+                    message(
+                        if (messsage.isEmpty())
+                            getString(
+                                Constants.errorCodeToString(errorCode)
+                            )
+                        else
+                            messsage
+                    )
+
+                }
             }
         }
     }

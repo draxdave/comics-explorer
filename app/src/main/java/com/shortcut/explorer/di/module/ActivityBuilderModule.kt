@@ -18,6 +18,7 @@ interface ActivityBuilderModule {
     @ContributesAndroidInjector
     abstract fun contributeFavoritesFragmentInjection(): FavoritesFragment
 
+    @InternalCoroutinesApi
     @ContributesAndroidInjector
     abstract fun contributeSearchFragmentInjection(): SearchFragment
 
