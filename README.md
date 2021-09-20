@@ -14,9 +14,9 @@ Sample project to demonstrate my android skills for the tech interview at 'Short
 
 ### Tasks
 
-- [ ] browse through the comics,
-- [ ] see the comic details, including its description,
-- [ ] search for comics by the comic number as well as te t,
+- [x] browse through the comics,
+- [x] see the comic details, including its description,
+- [ ] search for comics by the comic number as well as the t,
 - [ ] get the comic explanation
 - [ ] favorite the comics, which would be available offline too,
 - [ ] send comics to others,
