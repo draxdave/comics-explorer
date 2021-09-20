@@ -6,7 +6,7 @@ data class Comic(
     val num: Int,
     val title: String,
     val description: String,
-    val imgUrl: String,
+    val imgUrl: String?,
     val date: String,
     var isLast:Boolean
 )
@@ -19,6 +19,5 @@ fun Comic.toDetailedComic() = DetailedComic(
     imgUrl = imgUrl,
     date = date,
     explanation = null,
-    isCached = false,
     isLast = isLast
 )

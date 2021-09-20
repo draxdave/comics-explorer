@@ -6,19 +6,22 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface FavoritesRepository {
-    suspend fun getAllFavorites(): Flow<List<FavoriteEntity>>
-    suspend fun getFavoriteByNumber(pageNumber:Int): Flow<FavoriteEntity>
-    suspend fun deleteFavoriteByNumber(favoriteEntity:FavoriteEntity)
+    fun getAllFavorites(): Flow<List<FavoriteEntity>>
+    fun getFavoriteByNumber(pageNumber:Int): Flow<FavoriteEntity?>
+    suspend fun deleteFavorite(favoriteEntity:FavoriteEntity)
+    suspend fun addFavorite(favoriteEntity:FavoriteEntity):Long
 }
 
 class FavoritesRepositoryImpl @Inject constructor(
     private val favoriteDao: FavoriteDao
 ):FavoritesRepository{
 
-    override suspend  fun getAllFavorites(): Flow<List<FavoriteEntity>> = favoriteDao.getAllFavorites()
+    override fun getAllFavorites(): Flow<List<FavoriteEntity>> = favoriteDao.getAllFavorites()
 
-    override suspend fun getFavoriteByNumber(pageNumber: Int): Flow<FavoriteEntity> = favoriteDao.getFavorite(pageNumber)
+    override fun getFavoriteByNumber(pageNumber: Int): Flow<FavoriteEntity?> = favoriteDao.getFavorite(pageNumber)
 
-    override suspend fun deleteFavoriteByNumber(favoriteEntity: FavoriteEntity) = favoriteDao.deleteFavorite(favoriteEntity)
+    override suspend fun deleteFavorite(favoriteEntity: FavoriteEntity) = favoriteDao.deleteFavorite(favoriteEntity)
+
+    override suspend fun addFavorite(favoriteEntity: FavoriteEntity) = favoriteDao.insert(favoriteEntity)
 
 }

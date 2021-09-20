@@ -18,6 +18,5 @@ fun SearchResult.toDetailedComic() = DetailedComic(
     imgUrl = null,
     date = date,
     explanation = null,
-    isCached = false,
     isLast = false
 )

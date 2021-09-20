@@ -2,6 +2,7 @@ package com.shortcut.explorer.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.shortcut.explorer.business.datasource.db.favorites.FavoriteEntity
 import com.shortcut.explorer.business.datasource.network.main.ComicDto
 import com.shortcut.explorer.business.datasource.network.model.OnFail
 import com.shortcut.explorer.business.datasource.network.search.toQuery
@@ -11,15 +12,18 @@ import com.shortcut.explorer.business.domain.model.Resource
 import com.shortcut.explorer.business.domain.model.SearchResult
 import com.shortcut.explorer.business.domain.model.Status
 import com.shortcut.explorer.business.repositories.ExplainComicRepository
+import com.shortcut.explorer.business.repositories.FavoritesRepository
 import com.shortcut.explorer.business.repositories.RecentComicsRepository
 import com.shortcut.explorer.business.repositories.SearchComicsRepository
 import com.shortcut.explorer.presentation._base.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class SharedViewModel @Inject constructor(
     private val recentRepo: RecentComicsRepository,
     private val explainComicRepository: ExplainComicRepository,
+    private val favoritesRepository: FavoritesRepository,
     private val searchComicsRepository: SearchComicsRepository
 )
     : BaseViewModel() {
@@ -97,4 +101,29 @@ class SharedViewModel @Inject constructor(
         )
         setLoading(false)
     }
+    //End of =============== Comic Details
+
+    //=============== Favorite Comics
+
+    private val _isCached = MutableLiveData<Boolean>()
+    val isCached:LiveData<Boolean> = _isCached
+
+    val favoriteComics:Flow<List<FavoriteEntity>> = favoritesRepository.getAllFavorites().onEach {
+        delay(250)
+        isEmpty.value = it.isEmpty()
+    }
+
+    suspend fun setIsCached(number:Int){
+
+        favoritesRepository.getFavoriteByNumber(number).collect {
+            _isCached.value = it != null
+        }
+    }
+
+    suspend fun addFavorite(favoriteEntity: FavoriteEntity) = favoritesRepository.addFavorite(favoriteEntity)
+
+    suspend fun removeFavorite(favoriteEntity: FavoriteEntity) = favoritesRepository.deleteFavorite(favoriteEntity)
+
+
+
 }

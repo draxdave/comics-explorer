@@ -3,6 +3,7 @@ package com.shortcut.explorer.business.datasource.db.favorites
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.shortcut.explorer.business.domain.model.Comic
 import com.shortcut.explorer.business.domain.model.DetailedComic
 
 @Entity(tableName = "favorite_comics")
@@ -15,10 +16,9 @@ data class FavoriteEntity(
     val pId: Int?,
     val title: String,
     val description: String,
-    var imgUrl: String,
+    var imgUrl: String?,
     val date: String,
     var explanation: String?,
-    var isCached:Boolean,
     var isLast:Boolean
 )
 
@@ -30,16 +30,17 @@ fun FavoriteEntity.toDetailedComic() = DetailedComic(
     imgUrl = imgUrl,
     date = date,
     explanation = null,
-    isCached = false,
     isLast = isLast
 )
 
+ fun FavoriteEntity.toComic(): Comic {
 
-
-
-
-
-
-
-
-
+    return Comic(
+        num = num,
+        title = title,
+        description = description,
+        imgUrl = imgUrl,
+        date = date,
+        isLast = false
+    )
+}

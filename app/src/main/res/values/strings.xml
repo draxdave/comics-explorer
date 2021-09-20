@@ -18,5 +18,7 @@
     <string name="error_unauthorized">Unauthorized access error! Please sign in then try again.</string>
     <string name="unknown_error">Something went wrong! Stay calm and call application team if this message popped again.</string>
     <!--End of Network error handling part-->
+    <string name="empty_list_favorite">No comics are favorite yet!</string>
+    <string name="favorite_comics_title">Favorites</string>
 
 </resources>

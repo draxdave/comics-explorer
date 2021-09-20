@@ -13,8 +13,8 @@
             />
     </fragment>
 
-    <fragment tools:layout="@layout/fragment_recent"
-        android:name="com.shortcut.explorer.presentation.recent.RecentFragment"
+    <fragment tools:layout="@layout/fragment_favorites"
+        android:name="com.shortcut.explorer.presentation.favorite.FavoritesFragment"
         android:id="@+id/fragment_favorites">
         <action android:id="@+id/toDetailsPage"
             app:destination="@id/fragment_details"

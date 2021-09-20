@@ -13,8 +13,8 @@ interface FavoriteDao {
     suspend fun deleteFavorite(favoriteEntity: FavoriteEntity)
 
     @Query("SELECT * FROM favorite_comics WHERE pk=:pageNumber LIMIT 1")
-    suspend fun getFavorite(pageNumber: Int): Flow<FavoriteEntity>
+    fun getFavorite(pageNumber: Int): Flow<FavoriteEntity?>
 
     @Query("SELECT * FROM favorite_comics")
-    suspend fun getAllFavorites(): Flow<List<FavoriteEntity>>
+    fun getAllFavorites(): Flow<List<FavoriteEntity>>
 }

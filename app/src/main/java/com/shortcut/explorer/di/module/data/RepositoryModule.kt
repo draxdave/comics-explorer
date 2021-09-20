@@ -1,5 +1,6 @@
 package com.shortcut.explorer.di.module.data
 
+import com.shortcut.explorer.business.datasource.db.favorites.FavoriteDao
 import com.shortcut.explorer.business.datasource.network.NetworkWrapper
 import com.shortcut.explorer.business.datasource.network.main.MainApiService
 import com.shortcut.explorer.business.datasource.network.search.SearchApiService
@@ -28,4 +29,11 @@ class RepositoryModule {
     fun providesExplainComicsRepository(searchApiService: SearchApiService,
                                        networkWrapper: NetworkWrapper
     ):ExplainComicRepository = ExplainComicRepositoryImpl(searchApiService,networkWrapper)
+
+    @Provides
+    @Singleton
+    fun providesFavorites(favoriteDao: FavoriteDao)
+    :FavoritesRepository = FavoritesRepositoryImpl(favoriteDao)
+
+
 }

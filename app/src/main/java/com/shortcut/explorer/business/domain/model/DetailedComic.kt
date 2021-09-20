@@ -1,5 +1,6 @@
 package com.shortcut.explorer.business.domain.model
 
+import com.shortcut.explorer.business.datasource.db.favorites.FavoriteEntity
 import java.io.Serializable
 
 data class DetailedComic(
@@ -10,6 +11,18 @@ data class DetailedComic(
     var imgUrl: String?,
     val date: String,
     var explanation: String?,
-    var isCached:Boolean,
     var isLast:Boolean
 ):Serializable
+
+fun DetailedComic.toFavorite():FavoriteEntity{
+    return FavoriteEntity(
+        num = num,
+        pId = pId,
+        title = title,
+        description = description,
+        imgUrl = imgUrl,
+        explanation = explanation,
+        date = date,
+        isLast = false
+    )
+}
